@@ -47,22 +47,22 @@ openrr_apps_robot_command [OPTIONS] [SUBCOMMAND]
 | --log-directory <LOG_DIRECTORY> | FileAppenderでログを出力するパスの指定             |
 | --show-default-config           | デフォルトの設定ファイルの出力                     |
 
-| Subcommands                 | Description                              |
-| --------------------------- | ---------------------------------------- |
-| cancel_navigation_goal      | ナビゲーションゴールのキャンセル         |
-| execute_command             | 外部コマンドの実行                       |
-| get_navigation_current_pose | 現在位置の出力                           |
-| get_state                   | ジョイントの姿勢と該当する手先位置の取得 |
-| help                        | ヘルプの出力                             |
-| list                        | 使用可能なクライアントの一覧を出力       |
-| load_commands               | ファイルからコマンドを読み込み実行       |
-| move_ik                     | IKをもとに動く                           |
-| send_base_velocity          | ベースの速度を送信                       |
-| send_joints                 | ジョイントの姿勢を送信                   |
-| send_joints_pose            | あらかじめ設定された姿勢の送信           |
-| send_navigation_goal        | ナビゲーションゴールの送信               |
-| shell_completion            | シェル補完ファイルの出力                 |
-| speak                       | テキストの発話                           |
+| Subcommands                 | Description                                                              |
+| --------------------------- | ------------------------------------------------------------------------ |
+| cancel_navigation_goal      | ナビゲーションゴールのキャンセル                                         |
+| execute_command             | 外部コマンドの実行                                                       |
+| get_navigation_current_pose | 現在位置の出力                                                           |
+| get_state                   | ジョイントの姿勢と該当する手先位置の取得                                 |
+| help                        | ヘルプの出力                                                             |
+| list                        | 使用可能なクライアントの一覧を出力                                       |
+| load_commands               | ファイルからコマンドを読み込み実行                                       |
+| move_ik                     | IKをもとに動く [move_Ik](#move_ik)                                       |
+| send_base_velocity          | ベースの速度を送信 [send_base_velocity](#send_base_velocity)             |
+| send_joints                 | ジョイントの姿勢を送信 [send_joints](#send_joints)                       |
+| send_joints_pose            | あらかじめ設定された姿勢の送信 [send_joints_pose](#send_joints_pose)     |
+| send_navigation_goal        | ナビゲーションゴールの送信 [send_navigation_goal](#send_navigation_goal) |
+| shell_completion            | シェル補完ファイルの出力 [shell_completion](#shell_completion)           |
+| speak                       | テキストの発話                                                           |
 
 ### 例
 
@@ -77,7 +77,9 @@ urdf-viz ./openrr-planner/sample.urdf &
 そのあとコマンドを読み込みます。
 
 ```bash
-openrr_apps_robot_command --config-path ./openrr-apps/config/sample_robot_client_config_for_urdf_viz.toml load_commands ./openrr-apps/command/sample_cmd_urdf_viz.txt
+openrr_apps_robot_command \
+    --config-path ./openrr-apps/config/sample_robot_client_config_for_urdf_viz.toml \
+    load_commands ./openrr-apps/command/sample_cmd_urdf_viz.txt
 ```
 
 ### 例 (--config)
@@ -110,6 +112,128 @@ self_collision_check_pairs = []
 ```
 
 に対して、`move_base`を無効にします。結果、最後の方の`openrr_apps_robot_command send_base_velocity ...`でパニックが起こることから、`--config`によって上書きがされていることが確認できます。
+
+### move_ikの使い方
+
+```bash
+openrr_apps_robot_command move_ik [OPTIONS] <NAME>
+```
+
+#### Name
+
+IKクライアント名
+
+#### Option
+
+| Options                                                                           | Description           |
+| --------------------------------------------------------------------------------- | --------------------- |
+| -d, --duration <DURATION>                                                         | 到達までかける時間    |
+| -h, --help                                                                        | ヘルプの出力          |
+| -i, --interpolate                                                                 | ToDo: Understand this |
+| -l, --local                                                                       |                       |
+| --max_resolution_for_interpolation <MAX_RESOLUTION_FOR_INTERPOLATION>             | (default 0.5)         |
+| --min_number_of_points_for_interpolation <MIN_NUMBER_OF_POINTS_FOR_INTERPOLATION> | (default 10)          |
+| -r, --roll <ROLL>                                                                 | 目標のロール角        |
+| -p, --pitch <PITCH>                                                               | 目標のピッチ角        |
+| --yaw <YAW>                                                                       | 目標のヨー角          |
+| -x, --x <X>                                                                       | 目標のx座標           |
+| -y, --y <Y>                                                                       | 目標のy座標           |
+| -z, --z <Z>                                                                       | 目標のz座標           |
+
+### send_base_velocityの使い方
+
+```bash
+openrr_apps_robot_command send_base_velocity [OPTIONS] <X> <Y> <THETA>
+```
+
+#### X
+
+x方向の速度
+
+#### Y
+
+y方向の速度
+
+#### Theta
+
+角速度
+
+| Options                             | Description  |
+| ----------------------------------- | ------------ |
+| -d, --duration_secs <DURATION_SECS> | 継続する時間 |
+| -h, --help                          | ヘルプの出力 |
+
+### send_jointsの使い方
+
+```bash
+openrr_apps_robot_command send_joints [OPTIONS] <NAME>
+```
+
+#### Name
+
+クライアント名
+
+#### Option
+
+| Options                                                                           | Description           |
+| --------------------------------------------------------------------------------- | --------------------- |
+| -d, --duration <DURATION>                                                         | 到達までかける時間    |
+| -h, --help                                                                        | ヘルプの出力          |
+| -i, --interpolate                                                                 | ToDo: Understand this |
+| -j, --joint <JOINT>                                                               | ジョイント番号        |
+| --max_resolution_for_interpolation <MAX_RESOLUTION_FOR_INTERPOLATION>             | (default 0.05)        |
+| --min_number_of_points_for_interpolation <MIN_NUMBER_OF_POINTS_FOR_INTERPOLATION> | (default 10)          |
+
+### send_joints_poseの使い方
+
+```bash
+openrr_apps_robot_command send_joints_pose [OPTIONS] <NAME> <POSE_NAME>
+```
+
+#### Name
+
+クライアント名
+
+#### Pose name
+
+ポーズ名
+
+#### Option
+
+| Options                   | Description        |
+| ------------------------- | ------------------ |
+| -d, --duration <DURATION> | 到達までかける時間 |
+| -h, --help                | ヘルプの出力       |
+
+### send_navigation_goalの使い方
+
+```bash
+openrr_apps_robot_command send_navigation_goal [OPTIONS] <X> <Y> <YAW>
+```
+
+#### Option
+
+| Options                           | Description           |
+| --------------------------------- | --------------------- |
+| -f, --frame_id <FRAME_ID>         | ToDo: Understand this |
+| -h, --help                        | ヘルプの出力          |
+| -t, --timeout_secs <TIMEOUT_SECS> | ToDo: Understand this |
+
+### shell_completionの使い方
+
+```bash
+openrr_apps_robot_command shell_completion <SUBCOMMAND>
+```
+
+#### Subcommand
+
+| Subcommand  | Description  |
+| ----------- | ------------ |
+| bash        |              |
+| fish        |              |
+| help        | ヘルプの出力 |
+| power_shell |              |
+| zsh         |              |
 
 ## velocity sender "`openrr_apps_velocity_sender`"
 
@@ -171,13 +295,13 @@ openrr_apps_robot_teleop
 openrr_apps_robot_teleop [OPTIONS]
 ```
 
-| Options                         | Description                                                         |
-| ------------------------------- | ------------------------------------------------------------------- |
-| -c, --config-path <CONFIG_PATH> | 設定ファイルへのパス                                                |
-| -h, --help                      | ヘルプの出力                                                        |
-| --log-directory <LOG_DIRECTORY> | FileAppenderでログを出力するパスの指定                              |
-| --robot-config <ROBOT_CONFIG>   | デフォルトまたは設定ファイルで指定した設定の上書き (robot config file) |
-| --show-default-config           | デフォルトの設定ファイルの出力                                      |
+| Options                         | Description                                                             |
+| ------------------------------- | ----------------------------------------------------------------------- |
+| -c, --config-path <CONFIG_PATH> | 設定ファイルへのパス                                                    |
+| -h, --help                      | ヘルプの出力                                                            |
+| --log-directory <LOG_DIRECTORY> | FileAppenderでログを出力するパスの指定                                  |
+| --robot-config <ROBOT_CONFIG>   | デフォルトまたは設定ファイルで指定した設定の上書き (robot config file)  |
+| --show-default-config           | デフォルトの設定ファイルの出力                                          |
 | --teleop-config <TELEOP_CONFIG> | デフォルトまたは設定ファイルで指定した設定の上書き (teleop config file) |
 
 ### 例
