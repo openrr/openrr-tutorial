@@ -125,20 +125,20 @@ IKクライアント名
 
 #### Option
 
-| Options                                                                           | Description           |
-| --------------------------------------------------------------------------------- | --------------------- |
-| -d, --duration <DURATION>                                                         | 到達までかける時間    |
-| -h, --help                                                                        | ヘルプの出力          |
-| -i, --interpolate                                                                 | ToDo: Understand this |
-| -l, --local                                                                       |                       |
-| --max_resolution_for_interpolation <MAX_RESOLUTION_FOR_INTERPOLATION>             | (default 0.5)         |
-| --min_number_of_points_for_interpolation <MIN_NUMBER_OF_POINTS_FOR_INTERPOLATION> | (default 10)          |
-| -r, --roll <ROLL>                                                                 | 目標のロール角        |
-| -p, --pitch <PITCH>                                                               | 目標のピッチ角        |
-| --yaw <YAW>                                                                       | 目標のヨー角          |
-| -x, --x <X>                                                                       | 目標のx座標           |
-| -y, --y <Y>                                                                       | 目標のy座標           |
-| -z, --z <Z>                                                                       | 目標のz座標           |
+| Options                                                                           | Description                                  |
+| --------------------------------------------------------------------------------- | -------------------------------------------- |
+| -d, --duration <DURATION>                                                         | 到達までかける時間                           |
+| -h, --help                                                                        | ヘルプの出力                                 |
+| -i, --interpolate                                                                 | デカルト座標系　補間　IKクライアント名を指定 |
+| -l, --local                                                                       |                                              |
+| --max_resolution_for_interpolation <MAX_RESOLUTION_FOR_INTERPOLATION>             | 最大の補間分解能 (default 0.5)               |
+| --min_number_of_points_for_interpolation <MIN_NUMBER_OF_POINTS_FOR_INTERPOLATION> | 最小の補間点数 (default 10)                  |
+| -r, --roll <ROLL>                                                                 | 目標のロール角                               |
+| -p, --pitch <PITCH>                                                               | 目標のピッチ角                               |
+| --yaw <YAW>                                                                       | 目標のヨー角                                 |
+| -x, --x <X>                                                                       | 目標のx座標                                  |
+| -y, --y <Y>                                                                       | 目標のy座標                                  |
+| -z, --z <Z>                                                                       | 目標のz座標                                  |
 
 ### send_base_velocityの使い方
 
@@ -175,14 +175,14 @@ openrr_apps_robot_command send_joints [OPTIONS] <NAME>
 
 #### Option
 
-| Options                                                                           | Description           |
-| --------------------------------------------------------------------------------- | --------------------- |
-| -d, --duration <DURATION>                                                         | 到達までかける時間    |
-| -h, --help                                                                        | ヘルプの出力          |
-| -i, --interpolate                                                                 | ToDo: Understand this |
-| -j, --joint <JOINT>                                                               | ジョイント番号        |
-| --max_resolution_for_interpolation <MAX_RESOLUTION_FOR_INTERPOLATION>             | (default 0.05)        |
-| --min_number_of_points_for_interpolation <MIN_NUMBER_OF_POINTS_FOR_INTERPOLATION> | (default 10)          |
+| Options                                                                           | Description                     |
+| --------------------------------------------------------------------------------- | ------------------------------- |
+| -d, --duration <DURATION>                                                         | 到達までかける時間              |
+| -h, --help                                                                        | ヘルプの出力                    |
+| -i, --interpolate                                                                 | ToDo: Understand this           |
+| -j, --joint <JOINT>                                                               | ジョイント番号                  |
+| --max_resolution_for_interpolation <MAX_RESOLUTION_FOR_INTERPOLATION>             | 最大の補間分解能 (default 0.05) |
+| --min_number_of_points_for_interpolation <MIN_NUMBER_OF_POINTS_FOR_INTERPOLATION> | 最小の補間点数 (default 10)     |
 
 ### send_joints_poseの使い方
 
@@ -256,7 +256,6 @@ openrr_apps_velocity_sender [OPTIONS]
 | -c, --config-path <CONFIG_PATH> | 設定ファイルへのパス                               |
 | --config <CONFIG>               | デフォルトまたは設定ファイルで指定した設定の上書き |
 | -h, --help                      | ヘルプの出力                                       |
-| --theme <THEME>                 | GUIアプリケーションのテーマ選択                    |
 
 ## joint position sender "`openrr_apps_joint_position_sender`"
 
@@ -279,7 +278,6 @@ openrr_apps_joint_position_sender [OPTIONS]
 | -c, --config-path <CONFIG_PATH> | 設定ファイルへのパス                               |
 | --config <CONFIG>               | デフォルトまたは設定ファイルで指定した設定の上書き |
 | -h, --help                      | ヘルプの出力                                       |
-| --theme <THEME>                 | GUIアプリケーションのテーマ選択                    |
 
 ## robot teleop "`openrr_apps_robot_teleop`"
 
@@ -374,7 +372,3 @@ openrr_apps_config merge \
 ```
 
 これにより`sample_teleop_config_urdf_viz.toml`では`sample_robot_client_config_for_urdf_viz.toml`を指定してましたが、`sample_robot_client_config_for_urdf_viz_with_multiple_speaker.toml`に置き換わったものが`openrr-apps/config/example_config_merge.toml`出力されます。
-
-## GUI theme
-
-現在は`dark_theme` (./openrr-gui/dark_theme.toml)のみですが、好みに合わせてGUI theme用のtomlを作成し、サブコマンドで指定することでアプリケーションをカスタマイズすることができます。

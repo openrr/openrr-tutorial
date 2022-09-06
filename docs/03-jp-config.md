@@ -10,12 +10,11 @@ configを自分で書くことで、サンプルにないロボットや独自�
 
 デフォルトは以下のようになっています。読み込んだconfigに応じて設定が追加または上書きされます。
 
-```toml
-# true: auto-selection, false: disable
-localization = true
-move_base = true
-navigation = true
+```bash
+openrr_apps_robot_command --show-default-config
+```
 
+```toml
 [speak_configs]
 
 [openrr_clients_config]
