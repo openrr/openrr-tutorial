@@ -4,17 +4,13 @@
 
 By writing your own config, you can make OpenRR work with robots that are not in the sample or robots that you have created yourself. config can contain the following elements.
 
-We recommend that VSCode users install the `EvenBetterTOML` extension [here](./0x-en-forusers.md).
+We recommend that VSCode users install the `EvenBetterTOML` extension [here](./98-en-forusers.md).
 
 ## Default config
 
 The default is as follows. Settings are added or overwritten depending on the loaded config.
 
 ```toml
-localization = true
-move_base = true
-navigation = true
-
 [speak_configs]
 
 [openrr_clients_config]
@@ -29,22 +25,22 @@ self_collision_check_pairs = []
 
 This is a list of items to be written in the Client config. Please also refer to the samples in the repository. Click [here](https://github.com/openrr/openrr/tree/main/openrr-apps/config) to see the sample.
 
-| Properties                                                                | Desctiption                                                                      | Type                                                                    |
-| ------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| joint_trajectory_clients                                                  | Joint trajectory clients to be used.                                             | array string                                                            |
-| localization                                                              | Localization to be used. `ros`, `urdf-viz`, `false`, or plugin instance name.    | string or boolean                                                       |
-| move_base                                                                 | MoveBase to be used. `ros`, `urdf-viz`, `false`, or plugin instance name.        | string or boolean                                                       |
-| navigation                                                                | Navigation to be used. `ros`, `urdf-viz`, `false`, or plugin instance name.      | string or boolean                                                       |
-| [openrr_clients_config](#openrr-clients-config)                           | openrr_clients_config                                                            |                                                                         |
-| [ros_action_clients_configs](#ros-control-action-client-config)           | Setting `ROS Action Client`.                                                     | array [RosControlActionClientConfig](#ros-control-action-client-config) |
-| plugins                                                                   | Setting plugin                                                                   |                                                                         |
-| [ros_clients_configs](#ros-control-client-config)                         | ros_clients_configs                                                              |                                                                         |
-| [ros_cmd_vel_move_base_client_config](#ros-cmdvel-movebase-client-config) | Setting `ROS MoveBase`. Specify the topic you want to send by appending `topic`. |                                                                         |
-| [ros_localization_client_config](#ros-localization-client-config)         | Setting `ROS Localization`.                                                      |                                                                         |
-| [ros_navigation_client_config](#ros-navigation-client-config)             | Setting `ROS Navigation`.                                                        |                                                                         |
-| speak_configs                                                             | Setting  `speak`.                                                                | [SpeakConfig](#speak-config)                                            |
-| speakers                                                                  | Speakers to be used.                                                             | string                                                                  |
-| urdf_viz_clients_configs                                                  |                                                                                  |                                                                         |
+| Properties                                                                 | Desctiption                                                                      | Type                                                                    |
+| -------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| joint_trajectory_clients                                                   | Joint trajectory clients to be used.                                             | array string                                                            |
+| localization                                                               | Localization to be used. `ros`, `urdf-viz`, `false`, or plugin instance name.    | string or boolean                                                       |
+| move_base                                                                  | MoveBase to be used. `ros`, `urdf-viz`, `false`, or plugin instance name.        | string or boolean                                                       |
+| navigation                                                                 | Navigation to be used. `ros`, `urdf-viz`, `false`, or plugin instance name.      | string or boolean                                                       |
+| [openrr_clients_config](#openrr-clients-config)                            | openrr_clients_config                                                            |                                                                         |
+| [ros_action_clients_configs](#ros-control-action-client-config)            | Setting `ROS Action Client`.                                                     | array [RosControlActionClientConfig](#ros-control-action-client-config) |
+| plugins                                                                    | Setting plugin                                                                   |                                                                         |
+| [ros_clients_configs](#ros-control-client-config)                          | ros_clients_configs                                                              |                                                                         |
+| [ros_cmd_vel_move_base_client_config](#ros-cmd_vel-movebase-client-config) | Setting `ROS MoveBase`. Specify the topic you want to send by appending `topic`. |                                                                         |
+| [ros_localization_client_config](#ros-localization-client-config)          | Setting `ROS Localization`.                                                      |                                                                         |
+| [ros_navigation_client_config](#ros-navigation-client-config)              | Setting `ROS Navigation`.                                                        |                                                                         |
+| speak_configs                                                              | Setting  `speak`.                                                                | [SpeakConfig](#speak-config)                                            |
+| speakers                                                                   | Speakers to be used.                                                             | string                                                                  |
+| urdf_viz_clients_configs                                                   |                                                                                  |                                                                         |
 
 ## `joint_trajectory_clients`
 
@@ -57,7 +53,7 @@ Type: string or boolean
 ### Example
 
 ```toml
-move_base = true
+move_base = false
 ```
 
 ```toml
@@ -221,6 +217,7 @@ positions = [0.0, 1.2, 0.0, -0.7, 0.0, -0.2, 0.0]
 | upper                | double |
 
 #### Example
+
 ```toml
 [[urdf_viz_clients_configs]]
 name = "foo"
@@ -240,11 +237,11 @@ joint_position_limits = [
 
 ### Plugin Instance
 
-| Plugin Instance | Type                                        |
-| --------------- | ------------------------------------------- |
-| args            |                                             |
-| args_from_path  |                                             |
-| name            |                                             |
+| Plugin Instance | Type                                        | Description                                                                                                                                                               |
+| --------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| args            | string                                      | Arguments passed when creating this instance.                                                                                                                             |
+| args_from_path  | string                                      | Pass the contents of the specified file as an argument.                                                                                                                   |
+| path            | string (required)                           | Path to the plugin. If no extension is specified, the default extension for `cdylib` on the current OS will be selected. (linux: `.so`, macos: `.dylib`, windows: `.dll`) |
 | type            | [PluginInstanceKind](#plugin-instance-kind) |
 
 ### Plugin Instance Kind

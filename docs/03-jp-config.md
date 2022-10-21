@@ -44,7 +44,7 @@ Client configに書く項目の一覧になります。リポジトリにある�
 | [ros_navigation_client_config](#ros-navigation-client-config)             | `ROS Navigation`の設定。要素の有効無効の指定。                                      |                                                                         |
 | speak_configs                                                             | speakの設定。                                                                       | [SpeakConfig](#speak-config)                                            |
 | speakers                                                                  | 使用するSpeakersの指定。                                                            | string                                                                  |
-| urdf_viz_clients_configs                                                  | URDF-VIZの設定。                                                                    |                                                                         |
+| urdf_viz_clients_configs                                                  | urdf_vizの設定。                                                                    |                                                                         |
 
 ## `joint_trajectory_clients`
 
@@ -238,13 +238,11 @@ joint_position_limits = [
 | instances     | [PluginInstance](#plugin-instance) |
 | path          |                                    |
 
-### Plugin Instance
-
-| Plugin Instance | Type                                        |
-| --------------- | ------------------------------------------- |
-| args            |                                             |
-| args_from_path  |                                             |
-| name            |                                             |
+| Plugin Instance | Type                                        | Description                                                                                                                                                               |
+| --------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| args            | string                                      | Arguments passed when creating this instance.                                                                                                                             |
+| args_from_path  | string                                      | Pass the contents of the specified file as an argument.                                                                                                                   |
+| path            | string (required)                           | Path to the plugin. If no extension is specified, the default extension for `cdylib` on the current OS will be selected. (linux: `.so`, macos: `.dylib`, windows: `.dll`) |
 | type            | [PluginInstanceKind](#plugin-instance-kind) |
 
 ### Plugin Instance Kind

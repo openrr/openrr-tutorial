@@ -16,7 +16,7 @@ cargo install urdf-viz
 
 `openrr-apps`ではGUIやゲームパッドを用いた操作などを実装したアプリケーションです。コマンドやROSへのトピックの送信ができます。`urdf-viz`や`gazebo`で可視化されたロボット、実機についても同様に操作できます。
 
-Ubuntu, MacOSの方はこちら。
+Linux, MacOSの方はこちら。
 
 ```bash
 cargo install --path openrr-apps
@@ -56,12 +56,12 @@ openrr_apps_robot_command [OPTIONS] [SUBCOMMAND]
 | help                        | ヘルプの出力                                                             |
 | list                        | 使用可能なクライアントの一覧を出力                                       |
 | load_commands               | ファイルからコマンドを読み込み実行                                       |
-| move_ik                     | IKをもとに動く [move_Ik](#move_ik)                                       |
-| send_base_velocity          | ベースの速度を送信 [send_base_velocity](#send_base_velocity)             |
-| send_joints                 | ジョイントの姿勢を送信 [send_joints](#send_joints)                       |
-| send_joints_pose            | あらかじめ設定された姿勢の送信 [send_joints_pose](#send_joints_pose)     |
-| send_navigation_goal        | ナビゲーションゴールの送信 [send_navigation_goal](#send_navigation_goal) |
-| shell_completion            | シェル補完ファイルの出力 [shell_completion](#shell_completion)           |
+| move_ik                     | IKをもとに動く [move_Ik](#move_ikの使い方)                                       |
+| send_base_velocity          | ベースの速度を送信 [send_base_velocity](#send_base_velocityの使い方)             |
+| send_joints                 | ジョイントの姿勢を送信 [send_joints](#send_jointsの使い方)                       |
+| send_joints_pose            | あらかじめ設定された姿勢の送信 [send_joints_pose](#send_joints_poseの使い方)     |
+| send_navigation_goal        | ナビゲーションゴールの送信 [send_navigation_goal](#send_navigation_goalの使い方) |
+| shell_completion            | シェル補完ファイルの出力 [shell_completion](#shell_completionの使い方)           |
 | speak                       | テキストの発話                                                           |
 
 ### 例
@@ -84,34 +84,70 @@ openrr_apps_robot_command \
 
 ### 例 (--config)
 
-1つ前の例に`--config move_base=false`を追加してみます。
+1つ前の例に`--config`引数を追加してみます。`urdf-viz`上で実行するのを見てもいいのですが、簡単のために`load_commands`を`list`に変更しています。
 
 ```bash
 urdf-viz ./openrr-planner/sample.urdf &
 openrr_apps_robot_command \
     --config-path ./openrr-apps/config/sample_robot_client_config_for_urdf_viz.toml \
-    --config move_base=false \
-    load_commands ./openrr-apps/command/sample_cmd_urdf_viz.txt
+    list
 ```
 
-こうすると、default-configの
+まず何もせずに実行すれば、先程の前半部分のような出力が得られます。
 
 ```toml
-localization = true
-move_base = true
-navigation = true
-
-[speak_configs]
-
-[openrr_clients_config]
-self_collision_check_pairs = []
-
-[openrr_clients_config.ik_solvers_configs]
-
-[plugins]
+Raw joint trajectory clients
+    r_arm
+    l_arm
+Joint trajectory clients
+    r_arm
+    r_arm_ik
+    l_arm_collision_checked
+    l_arm_ik
+    r_arm_collision_checked
+    l_arm
+Collision check clients
+    l_arm_collision_checked
+    r_arm_collision_checked
+Ik clients
+    r_arm_ik
+    l_arm_ik
 ```
 
-に対して、`move_base`を無効にします。結果、最後の方の`openrr_apps_robot_command send_base_velocity ...`でパニックが起こることから、`--config`によって上書きがされていることが確認できます。
+`--config`引数では、`--config-path`の内容を上書きすることができます。したがって、
+
+```bash
+urdf-viz ./openrr-planner/sample.urdf &
+openrr_apps_robot_command \
+    --config-path ./openrr-apps/config/sample_robot_client_config_for_urdf_viz.toml \
+    --config openrr_clients_config.ik_clients_configs[0].name=\"user_defined_ik\" \
+    list
+```
+
+とすると、
+
+```toml
+Raw joint trajectory clients
+    l_arm
+    r_arm
+Joint trajectory clients
+    l_arm
+    r_arm_collision_checked
+    l_arm_collision_checked
+    r_arm
+    r_arm_ik
+    user_defined_ik
+Collision check clients
+    r_arm_collision_checked
+    l_arm_collision_checked
+Ik clients
+    r_arm_ik
+    user_defined_ik
+```
+
+というようにして左アーム用のIKクライアント名が`user_defined_ik`に変更されました。もちろんこれは直接tomlファイルを書き換えることでも実現できます。
+
+`load_commands`のまま実行する場合は、`openrr-apps/command/sample_cmd_urdf_viz.txt`内の`l_arm_ik`を`user_defined_ik`に変える必要があります。
 
 ### move_ikの使い方
 
@@ -179,7 +215,7 @@ openrr_apps_robot_command send_joints [OPTIONS] <NAME>
 | --------------------------------------------------------------------------------- | ------------------------------- |
 | -d, --duration <DURATION>                                                         | 到達までかける時間              |
 | -h, --help                                                                        | ヘルプの出力                    |
-| -i, --interpolate                                                                 | ToDo: Understand this           |
+| -i, --interpolate                                                                 | 目標を直交座標系での補間する    |
 | -j, --joint <JOINT>                                                               | ジョイント番号                  |
 | --max_resolution_for_interpolation <MAX_RESOLUTION_FOR_INTERPOLATION>             | 最大の補間分解能 (default 0.05) |
 | --min_number_of_points_for_interpolation <MIN_NUMBER_OF_POINTS_FOR_INTERPOLATION> | 最小の補間点数 (default 10)     |
@@ -213,11 +249,11 @@ openrr_apps_robot_command send_navigation_goal [OPTIONS] <X> <Y> <YAW>
 
 #### Option
 
-| Options                           | Description           |
-| --------------------------------- | --------------------- |
-| -f, --frame_id <FRAME_ID>         | ToDo: Understand this |
-| -h, --help                        | ヘルプの出力          |
-| -t, --timeout_secs <TIMEOUT_SECS> | ToDo: Understand this |
+| Options                           | Description            |
+| --------------------------------- | ---------------------- |
+| -f, --frame_id <FRAME_ID>         |                        |
+| -h, --help                        | ヘルプの出力           |
+| -t, --timeout_secs <TIMEOUT_SECS> | タイムアウトまでの秒数 |
 
 ### shell_completionの使い方
 
@@ -288,7 +324,7 @@ openrr_apps_robot_teleop
 ```
 
 ### 使い方
-
+In this example, the default operation with the gamepad is switched to operation from the keyboard.
 ```bash
 openrr_apps_robot_teleop [OPTIONS]
 ```
@@ -328,6 +364,19 @@ PrintSpeaker: r_arm0
 PrintSpeaker: r_arm1
 PrintSpeaker: r_arm2
 ```
+
+
+### 例(--teleop-config)
+
+```bash
+openrr_apps_robot_teleop \
+    --config-path ./openrr-apps/config/sample_teleop_config_urdf_viz.toml \
+    --teleop-config gamepad=\"keyboard\"
+```
+
+これは、[robot command "`openrr_apps_robot_command`"](#robot-command-openrr_apps_robot_command)の例(--config)と同じようにして、既存の設定を上書きするというものです。
+
+この例ではデフォルトであったゲームパッドでの操作をキーボードからの操作に切り替えています。
 
 ## config "`openrr_apps_config`"
 
