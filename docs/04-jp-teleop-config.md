@@ -149,7 +149,7 @@ PrintSpeaker: command ros speak
 
 ## `gamepad`
 
-string or BuiltinGamepad ("gilrs" or "keyboard"). Default is "gilrs."
+string or BuiltinGamepad ("gilrs" or "keyboard"). Default is "gilrs".
 
 ## `gil_gamepad_config`
 

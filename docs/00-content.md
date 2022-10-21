@@ -16,7 +16,7 @@
 
 04 [Apply OpenRR Apps "Teleop config"](./04-en-teleop-config.md) / [OpenRR Appsを応用する "Teleop config"](./04-jp-teleop-config.md)
 
-### Additional
+### Appendix
 
 98 [For users](./98-en-forusers.md) / [ユーザーへのすすめ](./98-jp-forusers.md)
 

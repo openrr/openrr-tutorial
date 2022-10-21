@@ -46,7 +46,7 @@ arci-ros
 
 arci-ros2
 
-* ROS2 [Foxy](https://docs.ros.org/en/foxy/Installation.html) or [Galactic](https://docs.ros.org/en/galactic/Installation.html)
+* ROS2 [Foxy](https://docs.ros.org/en/foxy/Installation.html) or [Humble](https://docs.ros.org/en/humble/Installation.html)
 
 ## 補足
 

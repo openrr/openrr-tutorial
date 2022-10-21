@@ -9,7 +9,11 @@ cargo build --release --features ros2
 cargo install --path ./openrr-apps
 ```
 
-この前にROS2を有効にしているか。
+これらのコマンドの前にROS2を有効になっているかを確認してみてください。
+
+## GUIのトラブルシューティング
+
+openrr-guiの[README](https://github.com/openrr/openrr/tree/main/openrr-gui#troubleshooting)を参照してみてください。
 
 ## Somthing
 

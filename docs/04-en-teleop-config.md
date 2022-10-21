@@ -149,7 +149,7 @@ PrintSpeaker: command ros speak
 
 ## `gamepad`
 
-string or BuiltinGamepad ("gilrs" or "keyboard"). Default is "gilrs."
+string or BuiltinGamepad ("gilrs" or "keyboard"). Default is "gilrs".
 
 ## `gil_gamepad_config`
 
@@ -275,7 +275,7 @@ initial_mode = "base"
 
 ## `robot_config_path`
 
-The `robot_config_path` specifies the path to the config file.
+The `robot_config_path` specifies the relative path to the config file.
 
 ### Example
 
