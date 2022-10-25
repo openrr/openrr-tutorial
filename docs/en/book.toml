@@ -1,0 +1,7 @@
+[book]
+title = "OpenRR Book"
+description = "Tutorial and reference for OpenRR"
+src = "src"
+
+[rust]
+edition = "2021"
