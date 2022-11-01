@@ -14,6 +14,11 @@ cargo install urdf-viz
 
 `openrr-apps` is an application that implements GUI, gamepad-based operations, etc. It can send commands, topics to ROS. Robots and real machines visualized by `urdf-viz` and `gazebo` can be operated in the same way.
 
+```bash
+git clone https://github.com/openrr/openrr
+cd openrr
+```
+
 For Linux and MacOS users.
 
 ```bash
