@@ -8,7 +8,7 @@ Items marked "required" are mandatory.
 
 ## Default config
 
-The default is as follows. Settings are added or overwritten depending on the loaded config.
+The default is as follows. Settings are added or overwritten depending on the loaded config. Since it is implemented in a HashMap, it will overwrite any already set and append for new settings.
 
 ```toml
 initial_mode = ""

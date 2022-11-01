@@ -47,22 +47,22 @@ openrr_apps_robot_command [OPTIONS] [SUBCOMMAND]
 | --log-directory <LOG_DIRECTORY> | FileAppenderでログを出力するパスの指定             |
 | --show-default-config           | デフォルトの設定ファイルの出力                     |
 
-| Subcommands                 | Description                                                              |
-| --------------------------- | ------------------------------------------------------------------------ |
-| cancel_navigation_goal      | ナビゲーションゴールのキャンセル                                         |
-| execute_command             | 外部コマンドの実行                                                       |
-| get_navigation_current_pose | 現在位置の出力                                                           |
-| get_state                   | ジョイントの姿勢と該当する手先位置の取得                                 |
-| help                        | ヘルプの出力                                                             |
-| list                        | 使用可能なクライアントの一覧を出力                                       |
-| load_commands               | ファイルからコマンドを読み込み実行                                       |
+| Subcommands                 | Description                                                                      |
+| --------------------------- | -------------------------------------------------------------------------------- |
+| cancel_navigation_goal      | ナビゲーションゴールのキャンセル                                                 |
+| execute_command             | 外部コマンドの実行                                                               |
+| get_navigation_current_pose | 現在位置の出力                                                                   |
+| get_state                   | ジョイントの姿勢と該当する手先位置の取得                                         |
+| help                        | ヘルプの出力                                                                     |
+| list                        | 使用可能なクライアントの一覧を出力                                               |
+| load_commands               | ファイルからコマンドを読み込み実行                                               |
 | move_ik                     | IKをもとに動く [move_Ik](#move_ikの使い方)                                       |
 | send_base_velocity          | ベースの速度を送信 [send_base_velocity](#send_base_velocityの使い方)             |
 | send_joints                 | ジョイントの姿勢を送信 [send_joints](#send_jointsの使い方)                       |
 | send_joints_pose            | あらかじめ設定された姿勢の送信 [send_joints_pose](#send_joints_poseの使い方)     |
 | send_navigation_goal        | ナビゲーションゴールの送信 [send_navigation_goal](#send_navigation_goalの使い方) |
 | shell_completion            | シェル補完ファイルの出力 [shell_completion](#shell_completionの使い方)           |
-| speak                       | テキストの発話                                                           |
+| speak                       | テキストの発話                                                                   |
 
 ### 例
 
@@ -324,7 +324,7 @@ openrr_apps_robot_teleop
 ```
 
 ### 使い方
-In this example, the default operation with the gamepad is switched to operation from the keyboard.
+
 ```bash
 openrr_apps_robot_teleop [OPTIONS]
 ```
