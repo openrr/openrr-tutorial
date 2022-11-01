@@ -1,4 +1,4 @@
-# 03-jp OpenRR Appsを応用する "Client config"
+# 03-en Apply OpenRR Apps "Client config"
 
 ## Write config
 

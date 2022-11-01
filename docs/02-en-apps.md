@@ -188,7 +188,7 @@ Velocity in y direction
 
 #### Theta
 
-角速度
+Angular velocity
 
 | Options                             | Description            |
 | ----------------------------------- | ---------------------- |

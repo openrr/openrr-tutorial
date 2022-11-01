@@ -4,7 +4,7 @@
 
 configを自分で書くことで、サンプルにないロボットや独自に作成したロボットがOpenRRで動くようになります。configには以下の要素を書くことができます。
 
-また、VSCodeを使用している方は[こちら](./0x-jp-forusers.md)から拡張機能の`EvenBetterTOML`を導入することを推奨します。
+また、VSCodeを使用している方は[こちら](./98-jp-forusers.md)から拡張機能の`EvenBetterTOML`を導入することを推奨します。
 
 ## Default config
 
@@ -57,7 +57,7 @@ Type: string or boolean
 ### Example
 
 ```toml
-move_base = true
+move_base = false
 ```
 
 ```toml
