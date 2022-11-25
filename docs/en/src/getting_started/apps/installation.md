@@ -6,6 +6,8 @@
 
 [`urdf-viz`](https://github.com/openrr/urdf-viz.git) is a URDF visualization application.
 
+Actually, `urdf-viz` is not part of OpenRR, but it is recommended to install because it is used frequently in this section.
+
 ```bash
 cargo install urdf-viz
 ```

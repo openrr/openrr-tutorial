@@ -41,6 +41,6 @@ openrr_apps_velocity_sender \
     --config-path ./openrr-apps/config/sample_robot_client_config_for_urdf_viz.toml
 ```
 
-By sliding the bar, you can specify the robot's speed and angular velocity.
+By sliding the bar, you can specify the robot's velocity and angular velocity.
 
 ![velocity_sender](images/velocity_sender.png)

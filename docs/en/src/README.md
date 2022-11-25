@@ -14,7 +14,7 @@ It can be used without ROS installation even when using Linux or MacOS.
 
 ## Installation for Rust
 
-If you are new to Rust, please follow [this](https://www.rust-lang.org/tools/install) official site to install Rust.
+If you are new to Rust, please follow [this](https://www.rust-lang.org/tools/install) to install Rust.
 
 ## Installation for latest OpenRR
 

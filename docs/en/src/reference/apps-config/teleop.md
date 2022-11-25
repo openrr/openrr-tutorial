@@ -212,6 +212,7 @@ Button and stick names follow [gilrs layout](https://docs.rs/gilrs/latest/gilrs/
 | "Unknown"       | "Unknown"       |           |
 
 ### Example
+
 ```toml
 [gil_gamepad_config.map]
 axis_map = [

@@ -60,6 +60,58 @@ openrr_apps_robot_command \
 
 The robot arm moved.
 
+## Robot client config file
+
+This is sample config file for single robot arm. Whether on a simulation or a real robot, operations from OpenRR can be realized by specifying the config file corresponding to the robot as shown below.
+
+However, the `urdf-viz` item, like `[urdf_viz_clients_configs]`, must be changed to ROS or similar.
+
+```toml
+[[urdf_viz_clients_configs]]
+name = "arm"
+joint_names = [
+    "shoulder_yaw",
+    "shoulder_pitch",
+    "shoulder_roll",
+    "elbow_pitch",
+    "wrist_yaw",
+    "wrist_pitch",
+]
+wrap_with_joint_position_limiter = true
+# If joint_position_limits is not specified, limits will be got from URDF.
+# The following values are the same as if getting limits from URDF.
+joint_position_limits = [
+    { lower = -3.0, upper = 3.0 },
+    { lower = -2.0, upper = 1.5 },
+    { lower = -1.5, upper = 2.0 },
+    { lower = -2.0, upper = 1.5 },
+    { lower = -3.0, upper = 3.0 },
+    { lower = -2.0, upper = 2.0 },
+]
+
+[openrr_clients_config]
+urdf_path = "{path_to_urdf}/sample.urdf"
+self_collision_check_pairs = ["shoulder_yaw:gripper_linear1"]
+
+# Client config for left arm
+[[openrr_clients_config.collision_check_clients_configs]]
+name = "arm_collision_checked"
+client_name = "arm"
+
+[[openrr_clients_config.ik_clients_configs]]
+name = "arm_ik"
+client_name = "arm_collision_checked"
+solver_name = "arm_ik_solver"
+
+[[openrr_clients_config.joints_poses]]
+pose_name = "zero"
+client_name = "arm_collision_checked"
+positions = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+[openrr_clients_config.ik_solvers_configs.l_arm_ik_solver]
+ik_target = "tool_fixed"
+```
+
 ## Note
 
 See also [reference of `openrr_apps_robot_command`](../../reference/apps/robot_command.md)

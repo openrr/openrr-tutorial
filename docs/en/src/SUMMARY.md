@@ -12,6 +12,8 @@ TODO: Port from https://github.com/openrr/openrr-tutorial/pull/1 's apps.md
   - [Operating robot from GUI](getting_started/apps/gui.md)
   - [Operating robot from CLI](getting_started/apps/cli.md)
   - [Teleopering robot](getting_started/apps/teleop.md)
+  - [Operating mobile robot with ROS2 and openrr-teleop](getting_started/apps/mobile.md)
+  - [Operating robot arm with ROS/ROS2 and openrr-teleop](getting_started/apps/arm.md)
 
 # Reference
 
@@ -34,6 +36,11 @@ TODO: Port from:
   - [Teleop config](reference/apps-config/teleop.md)
   - [Environmental Variables](reference/apps-config/env.md)
   - [Overwrite configuration at startup](reference/apps-config/overwrite.md)
+
+# Develop
+
+- [Develop OpenRR](develop/README.md)
+  - [For Developer](develop/developer.md)
 
 # Appendix
 
