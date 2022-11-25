@@ -64,19 +64,19 @@ According to APIs page of [Create Docs](https://iroboteducation.github.io/create
 
 [Create Docs](https://iroboteducation.github.io/create3_docs/)のAPIページによると、以下のコマンドで特定の動作（ドックに戻る、ドックから抜ける）ができるそうなので、割り当ててみます。
 
-```toml
+```txt
 ros2 action send_goal /undock irobot_create_msgs/action/Undock "{}"
 ros2 action send_goal /dock irobot_create_msgs/action/DockServo "{}"
 ```
 
-```toml
+```txt
 openrr_apps_robot_commands execute_command -- <command>
 ```
 
-```toml:irobot_create_dock_command.txt
+```txt:irobot_create_dock_command.txt
 openrr_apps_robot_commands execute_command -- ros2 action send_goal /undock irobot_create_msgs/action/Undock "{}"
 ```
 
-```toml:irobot_create_undock_command.txt
+```txt:irobot_create_undock_command.txt
 openrr_apps_robot_commands execute_command -- ros2 action send_goal /dock irobot_create_msgs/action/DockServo "{}"
 ```
