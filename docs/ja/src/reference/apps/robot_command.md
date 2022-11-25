@@ -63,7 +63,7 @@ openrr_apps_robot_command \
 
 まず何もせずに実行すれば、先程の前半部分のような出力が得られます。
 
-```toml
+```bash
 Raw joint trajectory clients
     r_arm
     l_arm
@@ -94,7 +94,7 @@ openrr_apps_robot_command \
 
 とすると、
 
-```toml
+```bash
 Raw joint trajectory clients
     l_arm
     r_arm
