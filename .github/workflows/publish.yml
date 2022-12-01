@@ -1,0 +1,27 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install mdbook
+        uses: taiki-e/install-action@mdbook
+      - run: mdbook build docs/en
+      - run: mdbook build docs/ja
+      - name: Deploy
+        run: |
+          mkdir -p book
+          mv docs/en/book book/en
+          mv docs/ja/book book/ja
+          cd book
+          git init
+          git add .
+          git -c user.name='ci' -c user.email='ci' commit -m 'Deploy OpenRR Book'
+          git push -f -q https://git:${{ secrets.github_token }}@github.com/${{ github.repository }} HEAD:gh-pages
+        if: github.event_name == 'push' && github.event.ref == 'refs/heads/main' && github.repository_owner == 'openrr'
