@@ -9,7 +9,7 @@ openrr_apps_robot_command [OPTIONS] [SUBCOMMAND]
 | Options                         | Description                                                                                                  |
 | ------------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | -c, --config-path <CONFIG_PATH> | Path to the setting file                                                                                     |
-| --config <CONFIG>               | Set options from command line. These settings take priority over the setting file specified by --config-path |
+| --config \<CONFIG>               | Set options from command line. These settings take priority over the setting file specified by --config-path |
 | -h, --help                      | Print help information                                                                                       |
 | -i, --interactive               | Use interactive mode                                                                                         |
 | --log-directory <LOG_DIRECTORY> | Path to log directory for tracing FileAppender                                                               |

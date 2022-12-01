@@ -32,9 +32,9 @@ cargo install --path ./openrr-apps
 
 ROSで用いられるジョイント名やトピックは`ros_clients_configs`に明記していきます。
 
-また特定の姿勢に名前をつけて実行することも可能です。今回は、初期姿勢を決定し、`initial_pose`という名前で登録しました。
+また特定の姿勢に名前をつけて実行することも可能です。今回は、初期姿勢を決定し、`initial_pose`という名前で登録しました。(robot_client_for_ros.toml)
 
-```toml:robot_client_for_ros.toml
+```toml
 [[ros_clients_configs]]
 name = "lite6"
 joint_names = ["joint1", "joint2", "joint3", "joint4", "joint5", "joint6"]
@@ -71,7 +71,9 @@ positions = [0.0, 0.17, 0.56, 0.0, 0.38, 0.0]
 
 ### Config file for teleop
 
-```toml:teleop_client_for_ros.toml
+- teleop_client_for_ros.toml
+
+```toml
 robot_config_path = "robot_client_config_for_ros.toml"
 
 [control_nodes_config]
@@ -94,9 +96,9 @@ mode = "lite6"
 
 実行したいコマンドを割り当てます。
 
-- Command to be enable servo
+- Command to be enable servo (enable_servo.txt)
 
-```txt:enable_servo.txt
+```txt
 openrr_apps_robot_commands execute_command -- rosservice call /ufactory/motion_ctrl 8 1
 
 openrr_apps_robot_commands execute_command -- rosservice call /ufactory/set_mode 1
@@ -106,15 +108,15 @@ openrr_apps_robot_commands execute_command -- rosservice call /ufactory/set_stat
 openrr_apps_robot_command speak Default "Initialization completed!"
 ```
 
-- Command for stop servo
+- Command for stop servo (stop_servo.txt)
 
-```txt:stop_servo.txt
+```txt
 openrr_apps_robot_commands execute_command -- rosservice call /ufactory/motion_ctrl 8 0
 ```
 
-作成したTeleop fileに以下を追加します。
+作成したTeleop fileに以下を追加します。(teleop_client_for_ros.toml)
 
-```toml:teleop_client_for_ros.toml
+```toml
 ...
 
 [[control_nodes_config.command_configs]]

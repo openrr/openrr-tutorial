@@ -34,7 +34,9 @@ Specify joint names, topics, etc. for ROS in `ros_clients_configs`.
 
 It is also possible to name a specific posture and execute it. In this case, we will determine the initial posture and register it as `initial_pose`.
 
-```toml:robot_client_for_ros.toml
+- robot_client_for_ros.toml
+
+```toml
 [[ros_clients_configs]]
 name = "lite6"
 joint_names = ["joint1", "joint2", "joint3", "joint4", "joint5", "joint6"]
@@ -71,7 +73,9 @@ positions = [0.0, 0.17, 0.56, 0.0, 0.38, 0.0]
 
 ### Config file for teleop
 
-```toml:teleop_client_for_ros.toml
+- teleop_client_for_ros.toml
+
+```toml
 robot_config_path = "robot_client_config_for_ros.toml"
 
 [control_nodes_config]
@@ -94,9 +98,9 @@ mode = "lite6"
 
 Assigns the configured command to be executed.
 
-- Command to be enable servo
+- Command to be enable servo (enable_servo.txt)
 
-```txt:enable_servo.txt
+```txt
 openrr_apps_robot_commands execute_command -- rosservice call /ufactory/motion_ctrl 8 1
 
 openrr_apps_robot_commands execute_command -- rosservice call /ufactory/set_mode 1
@@ -106,15 +110,15 @@ openrr_apps_robot_commands execute_command -- rosservice call /ufactory/set_stat
 openrr_apps_robot_command speak Default "Initialization completed!"
 ```
 
-- Command for stop servo
+- Command for stop servo (stop_servo.txt)
 
-```txt:stop_servo.txt
+```txt
 openrr_apps_robot_commands execute_command -- rosservice call /ufactory/motion_ctrl 8 0
 ```
 
-Then add the following to the teleop file you just created.
+Then add the following to the teleop file you just created file (teleop_client_for_ros.toml).
 
-```toml:teleop_client_for_ros.toml
+```toml
 ...
 
 [[control_nodes_config.command_configs]]

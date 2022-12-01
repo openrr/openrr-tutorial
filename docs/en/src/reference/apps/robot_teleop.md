@@ -36,7 +36,7 @@ openrr_apps_robot_teleop \
 
 Pressing the assigned mode selection button (`North` by default) toggles the mode, and the sub-mode selection button (`East` by default) toggles the sub-mode.
 
-```bash : output
+```bash
 PrintSpeaker: l_arm0
 PrintSpeaker: r_arm0
 PrintSpeaker: base

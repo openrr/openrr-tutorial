@@ -25,7 +25,7 @@ self_collision_check_pairs = []
 
 This is a list of items to be written in the Client config. Please also refer to the samples in the repository. Click [here](https://github.com/openrr/openrr/tree/main/openrr-apps/config) to see the sample.
 
-| Properties                                                                 | Desctiption                                                                      | Type                                                                    |
+| Properties                                                                 | Description                                                                      | Type                                                                    |
 | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
 | joint_trajectory_clients                                                   | Joint trajectory clients to be used.                                             | array string                                                            |
 | localization                                                               | Localization to be used. `ros`, `urdf-viz`, `false`, or plugin instance name.    | string or boolean                                                       |
@@ -374,7 +374,7 @@ openrr_apps_robot_command --config-path {path to toml} -i
 >  speak espeak Hello!
 ```
 
-```bash :output
+```bash
 data: "Hello!"
 ---
 ```

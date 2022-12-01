@@ -26,9 +26,9 @@ git clone https://github.com/openrr/openrr
 
 ## Installation for dependency
 
-Install software dependencies.
+Install software dependencies. (For Linux user)
 
-```bash: Linux
+```bash
 sudo apt install cmake build-essential libudev-dev xorg-dev libglu1-mesa-dev libasound2-dev libxkbcommon-dev
 ```
 

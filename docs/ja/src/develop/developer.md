@@ -1,3 +1,6 @@
 # For Developer
 
-comming soon ...
+**coming soon...**
+
+- OpenRRを用いたアプリケーションをどのように開発するか。
+- マイコンや他ソフトウェアとのインターフェースをどのように実装するか。

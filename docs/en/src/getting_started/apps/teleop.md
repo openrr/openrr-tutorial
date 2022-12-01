@@ -1,4 +1,4 @@
-# Teleopering robot
+# Robot teleoperation
 
 When using `openrr-teleop`, a configuration file must be created.
 
