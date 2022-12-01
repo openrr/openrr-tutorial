@@ -1,5 +1,13 @@
 # openrr-tutorial
 
+## Books
+
+You can read the book at the following links.
+
+- English: https://openrr.github.io/openrr-tutorial/en
+
+- Japanese: https://openrr.github.io/openrr-tutorial/ja
+
 ## Requirements
 
 Building the book requires [mdBook](https://github.com/rust-lang/mdBook), you can install it using cargo.
