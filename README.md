@@ -24,3 +24,23 @@ server to serve the book.
 ```bash
 mdbook serve docs/en --open
 ```
+
+## Spell check
+
+Using cspell
+
+### Installation of `cspell`
+
+```bash
+npm install -g cspell
+```
+
+### Spell checking
+
+```bash
+cspell -c ./cspell.json  "docs/{en,ja}/src/**"
+```
+
+### Extension
+
+In VScode, You can use [`Code Spell Checker`](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker) to check spelling without executing the above command.

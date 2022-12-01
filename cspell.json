@@ -1,0 +1,56 @@
+{
+    "version": "0.2",
+    "ignorePaths": [],
+    "dictionaryDefinitions": [],
+    "dictionaries": [],
+    "words": [],
+    "ignoreWords": [
+        // OpenRR word
+        "arci",
+        "libarci",
+        "openrr",
+        "teleop",
+        "teleoperation",
+        // ROS
+        "colcon",
+        "costmap",
+        "distro",
+        "movebase",
+        "moveit",
+        "nomotion",
+        "ros",
+        "rosdep",
+        "rosdistro",
+        "roslaunch",
+        "rospack",
+        "rosros",
+        "rosservice",
+        "urdf",
+        "xacro",
+        // Robot
+        "turtlebot",
+        "irobot",
+        "undock",
+        "ufactory",
+        "xarm",
+        "traj",
+        // Rust
+        "appender",
+        "gamepad",
+        "gilrs",
+        "mdbook",
+        // Dependencies, library, software, etc.
+        "assimp",
+        "espeak",
+        "cdylib",
+        "dylib",
+        "libasound",
+        "libglu",
+        "libudev",
+        "libxkbcommon",
+        "xorg",
+        // Else
+        "microcontroller"
+    ],
+    "import": []
+}
