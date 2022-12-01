@@ -73,10 +73,13 @@ ros2 action send_goal /dock irobot_create_msgs/action/DockServo "{}"
 openrr_apps_robot_commands execute_command -- <command>
 ```
 
-```txt:irobot_create_dock_command.txt
+- irobot_create_dock_command.txt
+
+```txt
 openrr_apps_robot_commands execute_command -- ros2 action send_goal /undock irobot_create_msgs/action/Undock "{}"
 ```
+- irobot_create_undock_command.txt
 
-```txt:irobot_create_undock_command.txt
+```txt
 openrr_apps_robot_commands execute_command -- ros2 action send_goal /dock irobot_create_msgs/action/DockServo "{}"
 ```

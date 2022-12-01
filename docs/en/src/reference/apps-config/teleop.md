@@ -164,15 +164,15 @@ string or BuiltinGamepad ("gilrs" or "keyboard"). Default is "gilrs".
 
 | Map            |                                                                               |
 | -------------- | ----------------------------------------------------------------------------- |
-| axis_map       | array [GilrsAxis Axis](#comparision-table-between-gilrsaxis-and-axis)         |
+| axis_map       | array [GilrsAxis Axis](#comparison-table-between-gilrsaxis-and-axis)         |
 | axis_value_map | array Axis double                                                             |
-| button_map     | array [GilrsButton Button](#comparision-table-between-gilrsbutton-and-button) |
+| button_map     | array [GilrsButton Button](#comparison-table-between-gilrsbutton-and-button) |
 
 A comparison table with `Gilrs` looks like this. For reference only, as it depends on the Joystick used. If you want to assign this particular button or stick, you can change the key by following the example and mapping it to the teleop_config file.
 
 Button and stick names follow [gilrs layout](https://docs.rs/gilrs/latest/gilrs/#controller-layout).
 
-### Comparision table between `GilrsAxis` and `Axis`
+### Comparison table between `GilrsAxis` and `Axis`
 
 | GilrsAxis     | Axis           |           |
 | ------------- | -------------- | --------- |
@@ -186,7 +186,7 @@ Button and stick names follow [gilrs layout](https://docs.rs/gilrs/latest/gilrs/
 | "DPadY"       | "DPadY"        | (default) |
 | "Unknown"     | "Unknown"      |           |
 
-### Comparision table between `GilrsButton` and `Button`
+### Comparison table between `GilrsButton` and `Button`
 
 | GilrsButton     | Button          |           |
 | --------------- | --------------- | --------- |

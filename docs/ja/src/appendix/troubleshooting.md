@@ -15,8 +15,6 @@ ROS2featureしてビルドしたか確認してみてください。
 
 GUIまわりの場合は、GitHub上の[README](https://github.com/openrr/openrr/tree/main/openrr-gui#troubleshooting)を参考にしてください。
 
-## Somthing
-
 ## それでもだめな場合
 
 もしかするとOpenRRのバグかもしれないので、GitHubにあるリポジトリの[Issues](https://github.com/openrr/openrr/issues)にその問題を投稿してくださると助かります。

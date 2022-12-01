@@ -1,4 +1,4 @@
-# Teleopering robot
+# Robot teleoperation
 
 `openrr-teleop`を用いる場合はconfig fileを新たに作る必要があります。
 

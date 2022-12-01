@@ -35,7 +35,7 @@ openrr_apps_robot_teleop \
 
 割り当てたモード選択ボタン（デフォルトでは`North`）を押すとモードが切り替わり、サブモード選択ボタン（デフォルトでは`East`）ではサブモードが切り替わります。
 
-```bash : output
+```bash
 PrintSpeaker: l_arm0
 PrintSpeaker: r_arm0
 PrintSpeaker: base

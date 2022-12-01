@@ -164,15 +164,15 @@ string or BuiltinGamepad ("gilrs" or "keyboard"). Default is "gilrs".
 
 | Map            |                                                                               |
 | -------------- | ----------------------------------------------------------------------------- |
-| axis_map       | array [GilrsAxis Axis](#comparision-table-between-gilrsaxis-and-axis)         |
+| axis_map       | array [GilrsAxis Axis](#comparison-table-between-gilrsaxis-and-axis)         |
 | axis_value_map | array Axis double                                                             |
-| button_map     | array [GilrsButton Button](#comparision-table-between-gilrsbutton-and-button) |
+| button_map     | array [GilrsButton Button](#comparison-table-between-gilrsbutton-and-button) |
 
 `Gilrs`との比較表はこのようになります。使用するJoystickにより異なりますので参考までに。特別にこのボタンやスティックを割り当てたいという場合はteleop_configのファイルに例に習って対応付けることでキーを変更できます。
 
 ボタンやスティックのレイアウトは[gilrs layout](https://docs.rs/gilrs/latest/gilrs/#controller-layout)に従っています。
 
-### Comparision table between `GilrsAxis` and `Axis`
+### Comparison table between `GilrsAxis` and `Axis`
 
 | GilrsAxis     | Axis           |           |
 | ------------- | -------------- | --------- |
@@ -186,7 +186,7 @@ string or BuiltinGamepad ("gilrs" or "keyboard"). Default is "gilrs".
 | "DPadY"       | "DPadY"        | (default) |
 | "Unknown"     | "Unknown"      |           |
 
-### Comparision table between `GilrsButton` and `Button`
+### Comparison table between `GilrsButton` and `Button`
 
 | GilrsButton     | Button          |           |
 | --------------- | --------------- | --------- |

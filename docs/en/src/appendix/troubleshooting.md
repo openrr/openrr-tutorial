@@ -15,8 +15,6 @@ Please make sure that ROS2 is enabled before these commands.
 
 Please check openrr-gui [README](https://github.com/openrr/openrr/tree/main/openrr-gui#troubleshooting)
 
-## Somthing
-
 ## If this does not resolve the issue
 
 It may be a bug in OpenRR, so it would be helpful if you could open an Issue in the repository [Issues](https://github.com/openrr/openrr/issues).

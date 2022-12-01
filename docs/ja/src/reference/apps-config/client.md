@@ -29,7 +29,7 @@ self_collision_check_pairs = []
 
 Client configに書く項目の一覧になります。リポジトリにあるサンプルもぜひご参考に。サンプルは[こちら](https://github.com/openrr/openrr/tree/main/openrr-apps/config)から。
 
-| Properties                                                                | Desctiption                                                                         | Type                                                                    |
+| Properties                                                                | Description                                                                         | Type                                                                    |
 | ------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
 | joint_trajectory_clients                                                  | 使用するJoint trajectory clients                                                    | array string                                                            |
 | localization                                                              | 使用するLocalizationの指定。 `ros`、`urdf-viz`、`false`、もしくはプラグインの名前。 | string or boolean                                                       |
@@ -73,7 +73,7 @@ navigation = "arci_ros2"
 | collision_check_clients_configs            | [CollisionCheckClientConfig](#collision-check-client-config)                        |
 | ik_clients_configs                         | [IkClientConfig](#ik-client-config)                                                 |
 | ik_solvers_configs                         | [IkSolverConfig](#ik-solver-config)                                                 |
-| joint_trajectory_clients_container_configs | [JointTrajectoryClientsContainerConfig](#joint-trajectory-cliente-container-config) |
+| joint_trajectory_clients_container_configs | [JointTrajectoryClientsContainerConfig](#joint-trajectory-client-container-config) |
 | joint_poses                                | [JointsPose](#joints-pose)                                                          |
 | self_collision_check_pairs                 | array string                                                                        |
 | urdf_full_path                             | string                                                                              |
@@ -162,7 +162,7 @@ allowable_position_error_m = 0.01
 | rotation_y          | boolean (default true)    |
 | rotation_z          | boolean (default true)    |
 
-### Joint Trajectory Cliente Container Config
+### Joint Trajectory Client Container Config
 
 | Joint Trajectory Client Container Config | Type                    |
 | ---------------------------------------- | ----------------------- |
@@ -375,7 +375,7 @@ openrr_apps_robot_command --config-path {path to toml} -i
 >  speak espeak Hello!
 ```
 
-```bash :output
+```bash
 data: "Hello!"
 ---
 ```
