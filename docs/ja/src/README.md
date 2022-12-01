@@ -8,17 +8,17 @@
 | MacOS          | ✔    | ✔   | ✔   |      |
 | Windows        | ✔    | ✔   |     |      |
 
-Ubuntu is supported as Linux. The approximate functionality is available even under MacOS and Windows.
+LinuxとしてUbuntuがサポートされています。MacOSやWindowsであってもおおよその機能は利用できます。
 
-It can be used without ROS installation even when using Linux or MacOS.
+LinuxやMacOSを使用している場合でも、ROSをインストールせずに使用することができます。
 
 ## Installation for Rust
 
-If you are new to Rust, please follow [this](https://www.rust-lang.org/tools/install) to install Rust.
+もしRustを利用したことがなければ、[こちら](https://www.rust-lang.org/tools/install)からRustのインストールをしてください。
 
 ## Installation for latest OpenRR
 
-You can clone from [GitHub](https://github.com/openrr/openrr).
+[GitHub](https://github.com/openrr/openrr)からOpenRRをクローンします。
 
 ```bash
 git clone https://github.com/openrr/openrr
@@ -26,7 +26,7 @@ git clone https://github.com/openrr/openrr
 
 ## Installation for dependency
 
-Install software dependencies. (For Linux user)
+依存関係のソフトウェアをインストールします。
 
 ```bash
 sudo apt install cmake build-essential libudev-dev xorg-dev libglu1-mesa-dev libasound2-dev libxkbcommon-dev
