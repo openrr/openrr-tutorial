@@ -5,3 +5,7 @@ src = "src"
 
 [rust]
 edition = "2021"
+
+[output.html]
+git-repository-url = "https://github.com/openrr/openrr-tutorial/tree/main/docs/ja"
+edit-url-template = "https://github.com/openrr/openrr-tutorial/tree/main/docs/ja/{path}"
