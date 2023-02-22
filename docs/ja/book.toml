@@ -9,3 +9,7 @@ edition = "2021"
 [output.html]
 git-repository-url = "https://github.com/openrr/openrr-tutorial/tree/main/docs/ja"
 edit-url-template = "https://github.com/openrr/openrr-tutorial/tree/main/docs/ja/{path}"
+
+[output.linkcheck]
+cache-timeout = 3600 # Set timeout to an hour
+warning-policy = "ignore"
