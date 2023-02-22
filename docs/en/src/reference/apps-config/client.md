@@ -4,7 +4,7 @@
 
 By writing your own config, you can make OpenRR work with robots that are not in the sample or robots that you have created yourself. config can contain the following elements.
 
-We recommend that VSCode users install the `EvenBetterTOML` extension [here](./98-en-forusers.md).
+We recommend that VSCode users install the `EvenBetterTOML` extension [here](https://github.com/openrr/openrr/tree/main/openrr-apps#schemas-for-config-files).
 
 ## Default config
 
