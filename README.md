@@ -1,5 +1,7 @@
 # openrr-tutorial
 
+[![crates.io](https://img.shields.io/crates/v/openrr.svg?logo=rust)](https://crates.io/crates/openrr) [![docs](https://docs.rs/openrr/badge.svg)](https://docs.rs/openrr) [![discord](https://dcbadge.vercel.app/api/server/8DAFFKc88B?style=flat)](https://discord.gg/8DAFFKc88B)
+
 ## Books
 
 You can read the book at the following links.
