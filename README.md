@@ -4,9 +4,9 @@
 
 You can read the book at the following links.
 
-- English: https://openrr.github.io/openrr-tutorial/en
+- English: https://openrr.github.io/openrr-tutorial/en/html
 
-- Japanese: https://openrr.github.io/openrr-tutorial/ja
+- Japanese: https://openrr.github.io/openrr-tutorial/ja/html
 
 ## Requirements
 
