@@ -5,12 +5,12 @@
 | OS             | Core | GUI | ROS | ROS2 |
 | -------------- | ---- | --- | --- | ---- |
 | Linux (Ubuntu) | ✔    | ✔   | ✔   | ✔    |
-| MacOS          | ✔    | ✔   | ✔   |      |
+| macOS          | ✔    | ✔   | ✔   |      |
 | Windows        | ✔    | ✔   |     |      |
 
-LinuxとしてUbuntuがサポートされています。MacOSやWindowsであってもおおよその機能は利用できます。
+LinuxとしてUbuntuがサポートされています。macOSやWindowsであってもおおよその機能は利用できます。
 
-LinuxやMacOSを使用している場合でも、ROSをインストールせずに使用することができます。
+LinuxやmacOSを使用している場合でも、ROSをインストールせずに使用することができます。
 
 ## Installation for Rust
 
