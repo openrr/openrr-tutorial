@@ -21,7 +21,7 @@ git clone https://github.com/openrr/openrr
 cd openrr
 ```
 
-LinuxやMacOSユーザーの方はこちら。
+LinuxやmacOSユーザーの方はこちら。
 
 ```bash
 cargo install --path openrr-apps

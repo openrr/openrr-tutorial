@@ -5,12 +5,12 @@
 | OS             | Core | GUI | ROS | ROS2 |
 | -------------- | ---- | --- | --- | ---- |
 | Linux (Ubuntu) | ✔    | ✔   | ✔   | ✔    |
-| MacOS          | ✔    | ✔   | ✔   |      |
+| macOS          | ✔    | ✔   | ✔   |      |
 | Windows        | ✔    | ✔   |     |      |
 
-Ubuntu is supported as Linux. The approximate functionality is available even under MacOS and Windows.
+Ubuntu is supported as Linux. The approximate functionality is available even under macOS and Windows.
 
-It can be used without ROS installation even when using Linux or MacOS.
+It can be used without ROS installation even when using Linux or macOS.
 
 ## Installation for Rust
 
