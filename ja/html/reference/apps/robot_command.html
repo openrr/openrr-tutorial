@@ -1,0 +1,387 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>openrr_apps_robot_command - OpenRR Book</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Tutorial and reference for OpenRR">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">OpenRR Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/openrr/openrr-tutorial/tree/main/docs/ja" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/openrr/openrr-tutorial/tree/main/docs/ja/src/reference/apps/robot_command.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="openrr_apps_robot_command"><a class="header" href="#openrr_apps_robot_command">openrr_apps_robot_command</a></h1>
+<p><code>openrr_apps_robot_command</code>ではロボットにいくつかの司令を送ることができます。</p>
+<pre><code class="language-bash">openrr_apps_robot_command [OPTIONS] [SUBCOMMAND]
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Description</th></tr></thead><tbody>
+<tr><td>-c, --config-path &lt;CONFIG_PATH&gt;</td><td>設定ファイルへのパス</td></tr>
+<tr><td>--config &lt;CONFIG&gt;</td><td>デフォルトまたは設定ファイルで指定した設定の上書き</td></tr>
+<tr><td>-h, --help</td><td>ヘルプの出力</td></tr>
+<tr><td>-i, --interactive</td><td>対話モードの使用</td></tr>
+<tr><td>--log-directory &lt;LOG_DIRECTORY&gt;</td><td>FileAppenderでログを出力するパスの指定</td></tr>
+<tr><td>--show-default-config</td><td>デフォルトの設定ファイルの出力</td></tr>
+</tbody></table>
+</div><div class="table-wrapper"><table><thead><tr><th>Subcommands</th><th>Description</th></tr></thead><tbody>
+<tr><td>cancel_navigation_goal</td><td>ナビゲーションゴールのキャンセル</td></tr>
+<tr><td>execute_command</td><td>外部コマンドの実行</td></tr>
+<tr><td>get_navigation_current_pose</td><td>現在位置の出力</td></tr>
+<tr><td>get_state</td><td>ジョイントの姿勢と該当する手先位置の取得</td></tr>
+<tr><td>help</td><td>ヘルプの出力</td></tr>
+<tr><td>list</td><td>使用可能なクライアントの一覧を出力</td></tr>
+<tr><td>load_commands</td><td>ファイルからコマンドを読み込み実行</td></tr>
+<tr><td>move_ik</td><td>IKをもとに動く <a href="#move_ik%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9">move_Ik</a></td></tr>
+<tr><td>send_base_velocity</td><td>ベースの速度を送信 <a href="#send_base_velocity%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9">send_base_velocity</a></td></tr>
+<tr><td>send_joints</td><td>ジョイントの姿勢を送信 <a href="#send_joints%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9">send_joints</a></td></tr>
+<tr><td>send_joints_pose</td><td>あらかじめ設定された姿勢の送信 <a href="#send_joints_pose%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9">send_joints_pose</a></td></tr>
+<tr><td>send_navigation_goal</td><td>ナビゲーションゴールの送信 <a href="#send_navigation_goal%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9">send_navigation_goal</a></td></tr>
+<tr><td>shell_completion</td><td>シェル補完ファイルの出力 <a href="#shell_completion%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9">shell_completion</a></td></tr>
+<tr><td>speak</td><td>テキストの発話</td></tr>
+</tbody></table>
+</div>
+<h2 id="例"><a class="header" href="#例">例</a></h2>
+<p>シミュレータ上でロボットを起動します。</p>
+<pre><code class="language-bash">urdf-viz ./openrr-planner/sample.urdf &amp;
+</code></pre>
+<p><img src="image/urdf-viz.png" alt="urdf_viz" /></p>
+<p>そのあとコマンドを読み込みます。</p>
+<pre><code class="language-bash">openrr_apps_robot_command \
+    --config-path ./openrr-apps/config/sample_robot_client_config_for_urdf_viz.toml \
+    load_commands ./openrr-apps/command/sample_cmd_urdf_viz.txt
+</code></pre>
+<h2 id="例---config"><a class="header" href="#例---config">例 (--config)</a></h2>
+<p>1つ前の例に<code>--config</code>引数を追加してみます。<code>urdf-viz</code>上で実行するのを見てもいいのですが、簡単のために<code>load_commands</code>を<code>list</code>に変更しています。</p>
+<pre><code class="language-bash">urdf-viz ./openrr-planner/sample.urdf &amp;
+openrr_apps_robot_command \
+    --config-path ./openrr-apps/config/sample_robot_client_config_for_urdf_viz.toml \
+    list
+</code></pre>
+<p>まず何もせずに実行すれば、先程の前半部分のような出力が得られます。</p>
+<pre><code class="language-bash">Raw joint trajectory clients
+    r_arm
+    l_arm
+Joint trajectory clients
+    r_arm
+    r_arm_ik
+    l_arm_collision_checked
+    l_arm_ik
+    r_arm_collision_checked
+    l_arm
+Collision check clients
+    l_arm_collision_checked
+    r_arm_collision_checked
+Ik clients
+    r_arm_ik
+    l_arm_ik
+</code></pre>
+<p><code>--config</code>引数では、<code>--config-path</code>の内容を上書きすることができます。したがって、</p>
+<pre><code class="language-bash">urdf-viz ./openrr-planner/sample.urdf &amp;
+openrr_apps_robot_command \
+    --config-path ./openrr-apps/config/sample_robot_client_config_for_urdf_viz.toml \
+    --config openrr_clients_config.ik_clients_configs[0].name=\"user_defined_ik\" \
+    list
+</code></pre>
+<p>とすると、</p>
+<pre><code class="language-bash">Raw joint trajectory clients
+    l_arm
+    r_arm
+Joint trajectory clients
+    l_arm
+    r_arm_collision_checked
+    l_arm_collision_checked
+    r_arm
+    r_arm_ik
+    user_defined_ik
+Collision check clients
+    r_arm_collision_checked
+    l_arm_collision_checked
+Ik clients
+    r_arm_ik
+    user_defined_ik
+</code></pre>
+<p>というようにして左アーム用のIKクライアント名が<code>user_defined_ik</code>に変更されました。もちろんこれは直接tomlファイルを書き換えることでも実現できます。</p>
+<p><code>load_commands</code>のまま実行する場合は、<code>openrr-apps/command/sample_cmd_urdf_viz.txt</code>内の<code>l_arm_ik</code>を<code>user_defined_ik</code>に変える必要があります。</p>
+<h2 id="move_ikの使い方"><a class="header" href="#move_ikの使い方">move_ikの使い方</a></h2>
+<pre><code class="language-bash">openrr_apps_robot_command move_ik [OPTIONS] &lt;NAME&gt;
+</code></pre>
+<h3 id="name"><a class="header" href="#name">Name</a></h3>
+<p>IKクライアント名</p>
+<h3 id="option"><a class="header" href="#option">Option</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Description</th></tr></thead><tbody>
+<tr><td>-d, --duration <DURATION></td><td>到達までかける時間</td></tr>
+<tr><td>-h, --help</td><td>ヘルプの出力</td></tr>
+<tr><td>-i, --interpolate</td><td>デカルト座標系　補間　IKクライアント名を指定</td></tr>
+<tr><td>-l, --local</td><td></td></tr>
+<tr><td>--max_resolution_for_interpolation &lt;MAX_RESOLUTION_FOR_INTERPOLATION&gt;</td><td>最大の補間分解能 (default 0.5)</td></tr>
+<tr><td>--min_number_of_points_for_interpolation &lt;MIN_NUMBER_OF_POINTS_FOR_INTERPOLATION&gt;</td><td>最小の補間点数 (default 10)</td></tr>
+<tr><td>-r, --roll <ROLL></td><td>目標のロール角</td></tr>
+<tr><td>-p, --pitch <PITCH></td><td>目標のピッチ角</td></tr>
+<tr><td>--yaw <YAW></td><td>目標のヨー角</td></tr>
+<tr><td>-x, --x <X></td><td>目標のx座標</td></tr>
+<tr><td>-y, --y <Y></td><td>目標のy座標</td></tr>
+<tr><td>-z, --z <Z></td><td>目標のz座標</td></tr>
+</tbody></table>
+</div>
+<h2 id="send_base_velocityの使い方"><a class="header" href="#send_base_velocityの使い方">send_base_velocityの使い方</a></h2>
+<pre><code class="language-bash">openrr_apps_robot_command send_base_velocity [OPTIONS] &lt;X&gt; &lt;Y&gt; &lt;THETA&gt;
+</code></pre>
+<h3 id="x"><a class="header" href="#x">X</a></h3>
+<p>x方向の速度</p>
+<h3 id="y"><a class="header" href="#y">Y</a></h3>
+<p>y方向の速度</p>
+<h3 id="theta"><a class="header" href="#theta">Theta</a></h3>
+<p>角速度</p>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Description</th></tr></thead><tbody>
+<tr><td>-d, --duration_secs &lt;DURATION_SECS&gt;</td><td>継続する時間</td></tr>
+<tr><td>-h, --help</td><td>ヘルプの出力</td></tr>
+</tbody></table>
+</div>
+<h2 id="send_jointsの使い方"><a class="header" href="#send_jointsの使い方">send_jointsの使い方</a></h2>
+<pre><code class="language-bash">openrr_apps_robot_command send_joints [OPTIONS] &lt;NAME&gt;
+</code></pre>
+<h3 id="name-1"><a class="header" href="#name-1">Name</a></h3>
+<p>クライアント名</p>
+<h3 id="option-1"><a class="header" href="#option-1">Option</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Description</th></tr></thead><tbody>
+<tr><td>-d, --duration <DURATION></td><td>到達までかける時間</td></tr>
+<tr><td>-h, --help</td><td>ヘルプの出力</td></tr>
+<tr><td>-i, --interpolate</td><td>目標を直交座標系での補間する</td></tr>
+<tr><td>-j, --joint <JOINT></td><td>ジョイント番号</td></tr>
+<tr><td>--max_resolution_for_interpolation &lt;MAX_RESOLUTION_FOR_INTERPOLATION&gt;</td><td>最大の補間分解能 (default 0.05)</td></tr>
+<tr><td>--min_number_of_points_for_interpolation &lt;MIN_NUMBER_OF_POINTS_FOR_INTERPOLATION&gt;</td><td>最小の補間点数 (default 10)</td></tr>
+</tbody></table>
+</div>
+<h2 id="send_joints_poseの使い方"><a class="header" href="#send_joints_poseの使い方">send_joints_poseの使い方</a></h2>
+<pre><code class="language-bash">openrr_apps_robot_command send_joints_pose [OPTIONS] &lt;NAME&gt; &lt;POSE_NAME&gt;
+</code></pre>
+<h3 id="name-2"><a class="header" href="#name-2">Name</a></h3>
+<p>クライアント名</p>
+<h3 id="pose-name"><a class="header" href="#pose-name">Pose name</a></h3>
+<p>ポーズ名</p>
+<h3 id="option-2"><a class="header" href="#option-2">Option</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Description</th></tr></thead><tbody>
+<tr><td>-d, --duration <DURATION></td><td>到達までかける時間</td></tr>
+<tr><td>-h, --help</td><td>ヘルプの出力</td></tr>
+</tbody></table>
+</div>
+<h2 id="send_navigation_goalの使い方"><a class="header" href="#send_navigation_goalの使い方">send_navigation_goalの使い方</a></h2>
+<pre><code class="language-bash">openrr_apps_robot_command send_navigation_goal [OPTIONS] &lt;X&gt; &lt;Y&gt; &lt;YAW&gt;
+</code></pre>
+<h3 id="option-3"><a class="header" href="#option-3">Option</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Description</th></tr></thead><tbody>
+<tr><td>-f, --frame_id &lt;FRAME_ID&gt;</td><td></td></tr>
+<tr><td>-h, --help</td><td>ヘルプの出力</td></tr>
+<tr><td>-t, --timeout_secs &lt;TIMEOUT_SECS&gt;</td><td>タイムアウトまでの秒数</td></tr>
+</tbody></table>
+</div>
+<h2 id="shell_completionの使い方"><a class="header" href="#shell_completionの使い方">shell_completionの使い方</a></h2>
+<pre><code class="language-bash">openrr_apps_robot_command shell_completion &lt;SUBCOMMAND&gt;
+</code></pre>
+<h3 id="subcommand"><a class="header" href="#subcommand">Subcommand</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Subcommand</th><th>Description</th></tr></thead><tbody>
+<tr><td>bash</td><td></td></tr>
+<tr><td>fish</td><td></td></tr>
+<tr><td>help</td><td>ヘルプの出力</td></tr>
+<tr><td>power_shell</td><td></td></tr>
+<tr><td>zsh</td><td></td></tr>
+</tbody></table>
+</div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../reference/apps/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../reference/apps/robot_teleop.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../reference/apps/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../reference/apps/robot_teleop.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

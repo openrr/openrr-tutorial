@@ -1,0 +1,1657 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>OpenRR Book</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Tutorial and reference for OpenRR">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">OpenRR Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/openrr/openrr-tutorial/tree/main/docs/ja" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<h2 id="supported-platforms"><a class="header" href="#supported-platforms">Supported Platforms</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>OS</th><th>Core</th><th>GUI</th><th>ROS</th><th>ROS2</th></tr></thead><tbody>
+<tr><td>Linux (Ubuntu)</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td></tr>
+<tr><td>macOS</td><td>✔</td><td>✔</td><td>✔</td><td></td></tr>
+<tr><td>Windows</td><td>✔</td><td>✔</td><td></td><td></td></tr>
+</tbody></table>
+</div>
+<p>LinuxとしてUbuntuがサポートされています。macOSやWindowsであってもおおよその機能は利用できます。</p>
+<p>LinuxやmacOSを使用している場合でも、ROSをインストールせずに使用することができます。</p>
+<h2 id="installation-for-rust"><a class="header" href="#installation-for-rust">Installation for Rust</a></h2>
+<p>もしRustを利用したことがなければ、<a href="https://www.rust-lang.org/tools/install">こちら</a>からRustのインストールをしてください。</p>
+<h2 id="installation-for-latest-openrr"><a class="header" href="#installation-for-latest-openrr">Installation for latest OpenRR</a></h2>
+<p><a href="https://github.com/openrr/openrr">GitHub</a>からOpenRRをクローンします。</p>
+<pre><code class="language-bash">git clone https://github.com/openrr/openrr
+</code></pre>
+<h2 id="installation-for-dependency"><a class="header" href="#installation-for-dependency">Installation for dependency</a></h2>
+<p>依存関係のソフトウェアをインストールします。</p>
+<pre><code class="language-bash">sudo apt install cmake build-essential libudev-dev xorg-dev libglu1-mesa-dev libasound2-dev libxkbcommon-dev
+</code></pre>
+<h2 id="optional-installation-for-ros"><a class="header" href="#optional-installation-for-ros">[Optional] Installation for ROS</a></h2>
+<p>arci-ros</p>
+<ul>
+<li>ROS <a href="http://wiki.ros.org/noetic/Installation">Noetic</a></li>
+</ul>
+<p>arci-ros2</p>
+<ul>
+<li>ROS2 <a href="https://docs.ros.org/en/foxy/Installation.html">Foxy</a> or <a href="https://docs.ros.org/en/humble/Installation.html">Humble</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="using-openrr-apps"><a class="header" href="#using-openrr-apps">Using OpenRR Apps</a></h1>
+<ol>
+<li><a href="getting_started/apps/installation.html">Installation</a></li>
+<li><a href="getting_started/apps/gui.html">Operating robot from GUI</a></li>
+<li><a href="getting_started/apps/cli.html">Operating robot from CLI</a></li>
+<li><a href="getting_started/apps/teleop.html">Robot teleoperation</a></li>
+<li><a href="getting_started/apps/mobile.html">Operating mobile robot with ROS2 and openrr-teleop</a></li>
+<li><a href="getting_started/apps/arm.html">Operating robot arm with ROS/ROS2 and openrr-teleop</a></li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
+<p><code>openrr-apps</code>によってロボットの操作ができます。Rustによって実装されたOpenRRを用いたアプリケーションの一例です。</p>
+<h2 id="urdf-viz"><a class="header" href="#urdf-viz"><code>urdf-viz</code></a></h2>
+<p><a href="https://github.com/openrr/urdf-viz.git"><code>urdf-viz</code></a> is a URDF visualization application.</p>
+<p>実際には<code>urdf-viz</code>はOpenRRの機能ではありませんが、この章ではよく用いるため合わせてインストールします。</p>
+<pre><code class="language-bash">cargo install urdf-viz
+</code></pre>
+<h2 id="openrr-apps"><a class="header" href="#openrr-apps"><code>openrr-apps</code></a></h2>
+<p><code>openrr-apps</code>は、GUIやコントローラなどから操作するためのアプリケーションです。コマンドやROSのトピックを介した操作、実機や<code>urdf-viz</code>上、<code>gazebo</code>上に関わらず同じように操作できます。</p>
+<pre><code class="language-bash">git clone https://github.com/openrr/openrr
+cd openrr
+</code></pre>
+<p>LinuxやmacOSユーザーの方はこちら。</p>
+<pre><code class="language-bash">cargo install --path openrr-apps
+</code></pre>
+<p>Windowsユーザーの方はこちら。</p>
+<pre><code class="language-bash">cargo install --path openrr-apps --no-default-features --features gui,assimp
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="operating-robot-from-gui"><a class="header" href="#operating-robot-from-gui">Operating robot from GUI</a></h1>
+<h2 id="move-the-robot-arm"><a class="header" href="#move-the-robot-arm">Move the robot arm</a></h2>
+<p>もし<code>OpenRR</code>をクローンしていなければ以下を実行してください。</p>
+<pre><code class="language-bash">git clone https://github.com:openrr/openrr
+cd openrr
+</code></pre>
+<p>サンプルのロボットアームを表示させます。</p>
+<pre><code class="language-bash">urdf-viz ./openrr-planner/sample.urdf &amp;
+</code></pre>
+<p><img src="getting_started/apps/images/sample_robot_arm.png" alt="sample_robot_arm" /></p>
+<h3 id="openrr_apps_joint_position_sender"><a class="header" href="#openrr_apps_joint_position_sender"><code>openrr_apps_joint_position_sender</code></a></h3>
+<pre><code class="language-bash">openrr_apps_joint_position_sender \
+    --config-path ./openrr-apps/config/sample_robot_client_config_for_urdf_viz.toml
+</code></pre>
+<p>スライドバーを動かすことで、関節角を変更することができます。</p>
+<p><img src="getting_started/apps/images/joint_pose_sender.png" alt="joint_pose_sender" /></p>
+<h2 id="move-the-mobile-robot"><a class="header" href="#move-the-mobile-robot">Move the mobile robot</a></h2>
+<pre><code class="language-bash">urdf-viz ./openrr-planner/sample.urdf &amp;
+</code></pre>
+<h3 id="openrr_apps_velocity_sender"><a class="header" href="#openrr_apps_velocity_sender"><code>openrr_apps_velocity_sender</code></a></h3>
+<pre><code class="language-bash">openrr_apps_velocity_sender \
+    --config-path ./openrr-apps/config/sample_robot_client_config_for_urdf_viz.toml
+</code></pre>
+<p>スライドバーを動かすことで、ロボットの速度と角速度を変更することができます。</p>
+<p><img src="getting_started/apps/images/velocity_sender.png" alt="velocity_sender" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="operating-robot-from-cli"><a class="header" href="#operating-robot-from-cli">Operating robot from CLI</a></h1>
+<h2 id="move-the-robot-arm-1"><a class="header" href="#move-the-robot-arm-1">Move the robot arm</a></h2>
+<h3 id="from-the-command-text-file"><a class="header" href="#from-the-command-text-file">From the command text file</a></h3>
+<p>もし<code>OpenRR</code>をクローンしていなければ以下を実行してください。</p>
+<pre><code class="language-bash">git clone https://github.com:openrr/openrr
+cd openrr
+</code></pre>
+<p>サンプルのロボットアームを表示してみましょう。</p>
+<pre><code class="language-bash">urdf-viz ./openrr-planner/sample.urdf &amp;
+</code></pre>
+<p><img src="getting_started/apps/images/sample_robot_arm.png" alt="sample_robot_arm" /></p>
+<p><code>load_commands</code>をtxtファイルに記したコマンドを実行するのに用いることができます。以下のコマンドを実行してみましょう。</p>
+<pre><code class="language-bash">openrr_apps_robot_command \
+    --config-path ./openrr-apps/config/sample_robot_client_config_for_urdf_viz.toml \
+    load_commands ./openrr-apps/command/sample_cmd_urdf_viz.txt
+</code></pre>
+<p>最後に以下のように出力されれば成功です。</p>
+<pre><code class="language-bash">PrintSpeaker: "This is sample robot"
+</code></pre>
+<h3 id="from-your-command-line"><a class="header" href="#from-your-command-line">From your command line</a></h3>
+<p><code>load_commands</code>を用いずに直接コマンドを書くことでも実行できます。試しにロボットアームの状態を取得してみましょう。</p>
+<pre><code class="language-bash">openrr_apps_robot_command \
+    --config-path ./openrr-apps/config/sample_robot_client_config_for_urdf_viz.toml \
+    get_state l_arm
+</code></pre>
+<p>以下のように出力されるでしょう。</p>
+<pre><code class="language-bash">Joint names : ["l_shoulder_yaw", "l_shoulder_pitch", "l_shoulder_roll", "l_elbow_pitch", "l_wrist_yaw", "l_wrist_pitch"]
+Joint positions : [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+</code></pre>
+<p>関節角を送信してみます。</p>
+<pre><code class="language-bash">openrr_apps_robot_command \
+    --config-path ./openrr-apps/config/sample_robot_client_config_for_urdf_viz.toml \
+    send_joints l_arm -j 0=1.2 -j 1=-1.2 -j 2=0.0 -j 3=1.2 -j 4=0.0 -j 5=0.0
+</code></pre>
+<p>ロボットアームが動きましたね。</p>
+<h2 id="robot-client-config-file"><a class="header" href="#robot-client-config-file">Robot client config file</a></h2>
+<p>これは単一ロボットアーム用のconfig fileの例です。シミュレータであっても実機であってもこのように記しておくことでOpenRRから操作ができます。</p>
+<p>ただし、<code>urdf-viz</code>の項目である、<code>[urdf_viz_clients_configs]</code>だけROSやそれに類するもののために変更する必要があります。</p>
+<pre><code class="language-toml">[[urdf_viz_clients_configs]]
+name = "arm"
+joint_names = [
+    "shoulder_yaw",
+    "shoulder_pitch",
+    "shoulder_roll",
+    "elbow_pitch",
+    "wrist_yaw",
+    "wrist_pitch",
+]
+wrap_with_joint_position_limiter = true
+# If joint_position_limits is not specified, limits will be got from URDF.
+# The following values are the same as if getting limits from URDF.
+joint_position_limits = [
+    { lower = -3.0, upper = 3.0 },
+    { lower = -2.0, upper = 1.5 },
+    { lower = -1.5, upper = 2.0 },
+    { lower = -2.0, upper = 1.5 },
+    { lower = -3.0, upper = 3.0 },
+    { lower = -2.0, upper = 2.0 },
+]
+
+[openrr_clients_config]
+urdf_path = "{path_to_urdf}/sample.urdf"
+self_collision_check_pairs = ["shoulder_yaw:gripper_linear1"]
+
+# Client config for left arm
+[[openrr_clients_config.collision_check_clients_configs]]
+name = "arm_collision_checked"
+client_name = "arm"
+
+[[openrr_clients_config.ik_clients_configs]]
+name = "arm_ik"
+client_name = "arm_collision_checked"
+solver_name = "arm_ik_solver"
+
+[[openrr_clients_config.joints_poses]]
+pose_name = "zero"
+client_name = "arm_collision_checked"
+positions = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+[openrr_clients_config.ik_solvers_configs.l_arm_ik_solver]
+ik_target = "tool_fixed"
+</code></pre>
+<h2 id="note"><a class="header" href="#note">Note</a></h2>
+<p>See also <a href="getting_started/apps/../../reference/apps/robot_command.html">reference of <code>openrr_apps_robot_command</code></a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="robot-teleoperation"><a class="header" href="#robot-teleoperation">Robot teleoperation</a></h1>
+<p><code>openrr-teleop</code>を用いる場合はconfig fileを新たに作る必要があります。</p>
+<h2 id="move-the-robot-arm-and-mobile-robot"><a class="header" href="#move-the-robot-arm-and-mobile-robot">Move the robot arm and mobile robot</a></h2>
+<pre><code class="language-bash">urdf-viz ./openrr-planner/sample.urdf &amp;
+</code></pre>
+<pre><code class="language-bash">openrr_apps_robot_teleop --config-path ./openrr-apps/config/sample_teleop_config_urdf_viz.toml
+</code></pre>
+<p><code>base</code>モードではロボットが移動します。ロボットアームは動きません。</p>
+<p>この<a href="getting_started/apps/teleop.html#teleop-config-file">sample file</a>では、<code>move_base_mode</code>が記されています。これは移動ロボットとしての挙動を設定するものです。</p>
+<h2 id="teleop-config"><a class="header" href="#teleop-config">Teleop config</a></h2>
+<h3 id="client-config-file"><a class="header" href="#client-config-file">Client config file</a></h3>
+<p>このファイルは<a href="getting_started/apps/cli.html"><code>"Operating robot from CLI"</code></a>のものと同じです。</p>
+<pre><code class="language-toml">[[urdf_viz_clients_configs]]
+name = "arm"
+joint_names = [
+    "shoulder_yaw",
+    "shoulder_pitch",
+    "shoulder_roll",
+    "elbow_pitch",
+    "wrist_yaw",
+    "wrist_pitch",
+]
+wrap_with_joint_position_limiter = true
+# If joint_position_limits is not specified, limits will be got from URDF.
+# The following values are the same as if getting limits from URDF.
+joint_position_limits = [
+    { lower = -3.0, upper = 3.0 },
+    { lower = -2.0, upper = 1.5 },
+    { lower = -1.5, upper = 2.0 },
+    { lower = -2.0, upper = 1.5 },
+    { lower = -3.0, upper = 3.0 },
+    { lower = -2.0, upper = 2.0 },
+]
+
+[openrr_clients_config]
+urdf_path = "{path_to_urdf}/sample.urdf"
+self_collision_check_pairs = ["shoulder_yaw:gripper_linear1"]
+
+# Client config for left arm
+[[openrr_clients_config.collision_check_clients_configs]]
+name = "arm_collision_checked"
+client_name = "arm"
+
+[[openrr_clients_config.ik_clients_configs]]
+name = "arm_ik"
+client_name = "arm_collision_checked"
+solver_name = "arm_ik_solver"
+
+[[openrr_clients_config.joints_poses]]
+pose_name = "zero"
+client_name = "arm_collision_checked"
+positions = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+[openrr_clients_config.ik_solvers_configs.arm_ik_solver]
+ik_target = "tool_fixed"
+</code></pre>
+<h3 id="teleop-config-file"><a class="header" href="#teleop-config-file">Teleop config file</a></h3>
+<p>以下のようにしてteleop fileを作成します。1行目のようにしてclient config fileを対応させる必要があります。</p>
+<pre><code class="language-toml">robot_config_path = "sample_robot_client_config_for_urdf_viz.toml"
+
+[control_nodes_config]
+move_base_mode = "base"
+
+[control_nodes_config.joints_pose_sender_config]
+
+[[control_nodes_config.ik_node_teleop_configs]]
+solver_name = "arm_ik_solver"
+joint_trajectory_client_name = "arm"
+
+[control_nodes_config.ik_node_teleop_configs.config]
+mode = "i k"
+
+[[control_nodes_config.joy_joint_teleop_configs]]
+client_name = "arm_collision_checked"
+
+[control_nodes_config.joy_joint_teleop_configs.config]
+mode = "arm"
+</code></pre>
+<h2 id="note-1"><a class="header" href="#note-1">Note</a></h2>
+<p>See also <a href="getting_started/apps/../../reference/apps/robot_teleop.html">reference of <code>openrr_apps_robot__teleop</code></a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="operating-mobile-robot-with-ros2-and-openrr-teleop"><a class="header" href="#operating-mobile-robot-with-ros2-and-openrr-teleop">Operating mobile robot with ROS2 and openrr-teleop</a></h1>
+<h2 id="turtlebot3"><a class="header" href="#turtlebot3">Turtlebot3</a></h2>
+<pre><code class="language-toml">move_base = "arci_ros2"
+navigation = "arci_ros2"
+
+[openrr_clients_config]
+
+[plugins.arci_ros2]
+path = "../../target/debug/libarci_ros2"
+
+[[plugins.arci_ros2.instances]]
+name = "arci_ros2"
+type = "MoveBase"
+args = """
+topic = "/cmd_vel"
+"""
+
+[[plugins.arci_ros2.instances]]
+name = "arci_ros2"
+type = "Navigation"
+args = """
+action_name = "/navigate_to_pose"
+"""
+</code></pre>
+<h2 id="irobot-create3"><a class="header" href="#irobot-create3">iRobot Create3</a></h2>
+<p>Turtlebot3と同様です。</p>
+<pre><code class="language-toml">move_base = "arci_ros2"
+
+[openrr_clients_config]
+
+[plugins.arci_ros2]
+path = "../../target/release/libarci_ros2"
+
+[[plugins.arci_ros2.instances]]
+name = "arci_ros2"
+type = "MoveBase"
+args = """
+topic = "/cmd_vel"
+"""
+
+robot_config_path = "irobot_create_robot_client_config_ros2.toml"
+initial_mode = "base"
+
+[control_nodes_config]
+move_base_mode = "base"
+
+[[control_nodes_config.command_configs]]
+name = "dock command"
+file_path = "irobot_create_dock_command.txt"
+
+[[control_nodes_config.command_configs]]
+name = "undock command"
+file_path = "irobot_create_undock_command.txt"
+</code></pre>
+<p>According to APIs page of <a href="https://iroboteducation.github.io/create3_docs/">Create Docs</a>, the following commands allow you to command specific actions.</p>
+<p><a href="https://iroboteducation.github.io/create3_docs/">Create Docs</a>のAPIページによると、以下のコマンドで特定の動作（ドックに戻る、ドックから抜ける）ができるそうなので、割り当ててみます。</p>
+<pre><code class="language-txt">ros2 action send_goal /undock irobot_create_msgs/action/Undock "{}"
+ros2 action send_goal /dock irobot_create_msgs/action/DockServo "{}"
+</code></pre>
+<pre><code class="language-txt">openrr_apps_robot_commands execute_command -- &lt;command&gt;
+</code></pre>
+<ul>
+<li>irobot_create_dock_command.txt</li>
+</ul>
+<pre><code class="language-txt">openrr_apps_robot_commands execute_command -- ros2 action send_goal /undock irobot_create_msgs/action/Undock "{}"
+</code></pre>
+<ul>
+<li>irobot_create_undock_command.txt</li>
+</ul>
+<pre><code class="language-txt">openrr_apps_robot_commands execute_command -- ros2 action send_goal /dock irobot_create_msgs/action/DockServo "{}"
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="operating-robot-arm-with-rosros2-and-openrr-teleop"><a class="header" href="#operating-robot-arm-with-rosros2-and-openrr-teleop">Operating robot arm with ROS/ROS2 and openrr-teleop</a></h1>
+<h2 id="ufactory-lite6-ros"><a class="header" href="#ufactory-lite6-ros">Ufactory Lite6 (ROS)</a></h2>
+<h3 id="setup"><a class="header" href="#setup">Setup</a></h3>
+<p><a href="https://github.com/xArm-Developer/xarm_ros"><code>xarm_ros</code></a>に従って、<code>ROS</code>用にロボットアームのセットアップをします。</p>
+<pre><code class="language-bash">mkdir -p ~/xarm_ws/src
+cd ~/xarm_ws/src
+git clone https://github.com/xArm-Developer/xarm_ros
+cd xarm-ros
+git pull
+git submodule sync
+git submodule update --init --remote
+rosdep update
+rosdep install --from-paths . --ignore-src --rosdistro noetic -y
+cd ~/xarm_ws
+catkin_make
+</code></pre>
+<p><code>ROS</code>にfeatureしてOpenRRをビルドします。</p>
+<pre><code class="language-bash">cd openrr
+cargo build --release --feature ros
+cargo install --path ./openrr-apps
+</code></pre>
+<h3 id="config-file-for-client"><a class="header" href="#config-file-for-client">Config file for client</a></h3>
+<p>ROSで用いられるジョイント名やトピックは<code>ros_clients_configs</code>に明記していきます。</p>
+<p>また特定の姿勢に名前をつけて実行することも可能です。今回は、初期姿勢を決定し、<code>initial_pose</code>という名前で登録しました。(robot_client_for_ros.toml)</p>
+<pre><code class="language-toml">[[ros_clients_configs]]
+name = "lite6"
+joint_names = ["joint1", "joint2", "joint3", "joint4", "joint5", "joint6"]
+complete_allowable_errors = [0.02, 0.02, 0.02, 0.02, 0.02, 0.02]
+controller_name = "/ufactory/lite6_traj_controller"
+state_topic_name = "/ufactory/lite6_traj_controller/state"
+
+[openrr_clients_config]
+urdf_path = "$(rospack find xarm_description)/urdf/lite6_robot.urdf.xacro"
+self_collision_check_pairs = ["joint1:joint4"]
+
+[[openrr_clients_config.ik_clients_configs]]
+name = "arm_ik"
+client_name = "arm_collision_checked"
+solver_name = "arm_ik_solver"
+
+[openrr_clients_config.ik_solvers_configs.arm_ik_solver]
+ik_target = "joint_eef"
+
+[[openrr_clients_config.collision_check_clients_configs]]
+name = "arm_collision_checked"
+client_name = "lite6"
+
+[[openrr_clients_config.joints_poses]]
+pose_name = "zero"
+client_name = "arm_collision_checked"
+positions = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+[[openrr_clients_config.joints_poses]]
+pose_name = "initial_pose"
+client_name = "arm_collision_checked"
+positions = [0.0, 0.17, 0.56, 0.0, 0.38, 0.0]
+</code></pre>
+<h3 id="config-file-for-teleop"><a class="header" href="#config-file-for-teleop">Config file for teleop</a></h3>
+<ul>
+<li>teleop_client_for_ros.toml</li>
+</ul>
+<pre><code class="language-toml">robot_config_path = "robot_client_config_for_ros.toml"
+
+[control_nodes_config]
+
+[control_nodes_config.joints_pose_sender_config]
+
+[[control_nodes_config.ik_node_teleop_configs]]
+solver_name = "arm_ik_solver"
+joint_trajectory_client_name = "lite6"
+
+[control_nodes_config.ik_node_teleop_configs.config]
+mode = "i k"
+
+[[control_nodes_config.joy_joint_teleop_configs]]
+client_name = "arm_collision_checked"
+
+[control_nodes_config.joy_joint_teleop_configs.config]
+mode = "lite6"
+</code></pre>
+<p>実行したいコマンドを割り当てます。</p>
+<ul>
+<li>Command to be enable servo (enable_servo.txt)</li>
+</ul>
+<pre><code class="language-txt">openrr_apps_robot_commands execute_command -- rosservice call /ufactory/motion_ctrl 8 1
+
+openrr_apps_robot_commands execute_command -- rosservice call /ufactory/set_mode 1
+
+openrr_apps_robot_commands execute_command -- rosservice call /ufactory/set_state 0
+
+openrr_apps_robot_command speak Default "Initialization completed!"
+</code></pre>
+<ul>
+<li>Command for stop servo (stop_servo.txt)</li>
+</ul>
+<pre><code class="language-txt">openrr_apps_robot_commands execute_command -- rosservice call /ufactory/motion_ctrl 8 0
+</code></pre>
+<p>作成したTeleop fileに以下を追加します。(teleop_client_for_ros.toml)</p>
+<pre><code class="language-toml">...
+
+[[control_nodes_config.command_configs]]
+name = "stop servo"
+file_path = "../command/stop_servo.txt"
+
+[[control_nodes_config.command_configs]]
+name = "enable servo"
+file_path = "../command/enable_servo.txt"
+</code></pre>
+<p>ROSを有効化した後に以下の2つのコマンドを実行します。</p>
+<pre><code class="language-bash">roslaunch xarm_gazebo lite6_beside_table.launch
+</code></pre>
+<pre><code class="language-bash">openrr_apps_robot_teleop --config-path ./config/teleop_config_for_ros.toml
+</code></pre>
+<p><img src="getting_started/apps/../apps/images/lite6_gazebo.png" alt="gazebo" /></p>
+<p>もし<code>Lite6</code>をお持ちでしたら、以下の通りに実機を動かすことができます。</p>
+<pre><code class="language-bash">roslaunch lite6_moveit_config realMove_exec.launch robot_ip:=192.168.1.xxx
+</code></pre>
+<pre><code class="language-bash">openrr_apps_robot_teleop --config-path ./config/teleop_config_for_ros.toml
+</code></pre>
+<p><img src="getting_started/apps/../apps/images/lite6_moveit.png" alt="moveit" /></p>
+<h2 id="ufactory-lite6-ros2"><a class="header" href="#ufactory-lite6-ros2">Ufactory Lite6 (ROS2)</a></h2>
+<h3 id="setup-1"><a class="header" href="#setup-1">Setup</a></h3>
+<p><a href="https://github.com/xArm-Developer/xarm_ros2"><code>xarm_ros2</code></a>に従って、<code>ROS2</code>用にロボットアームのセットアップをします。</p>
+<pre><code class="language-bash">mkdir -p ~/xarm_ws/src
+cd ~/xarm_ws/src
+git clone https://github.com/xArm-Developer/xarm_ros2
+cd xarm-ros2
+git pull
+git submodule sync
+git submodule update --init --remote
+rosdep update
+rosdep install --from-paths . --ignore-src --rosdistro $ROS_DISTRO -y
+cd ~/xarm_ws
+colcon build
+</code></pre>
+<p><code>ROS2</code>にfeatureしてOpenRRをビルドします。</p>
+<pre><code class="language-bash">cd openrr
+cargo build --release --feature ros2
+cargo install --path ./openrr-apps
+</code></pre>
+<h3 id="config-file-for-client-1"><a class="header" href="#config-file-for-client-1">Config file for client</a></h3>
+<p>ROS2ではプラグインとして明記していきます。</p>
+<pre><code class="language-toml">[plugins.arci_ros2]
+# Path to OpenRR
+path = "../../openrr/target/release/libarci_ros2"
+
+[[plugins.arci_ros2.instances]]
+name = "lite6"
+type = "JointTrajectoryClient"
+args = """
+action_name = "/lite6_traj_controller"
+"""
+
+[openrr_clients_config]
+urdf_path = "../lite6_robot.urdf"
+self_collision_check_pairs = ["joint1:joint4"]
+
+[[openrr_clients_config.ik_clients_configs]]
+name = "arm_ik"
+client_name = "arm_collision_checked"
+solver_name = "arm_ik_solver"
+
+[openrr_clients_config.ik_solvers_configs.arm_ik_solver]
+ik_target = "joint_eef"
+
+[[openrr_clients_config.collision_check_clients_configs]]
+name = "arm_collision_checked"
+client_name = "lite6"
+
+[[openrr_clients_config.joints_poses]]
+pose_name = "zero"
+client_name = "arm_collision_checked"
+positions = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+[[openrr_clients_config.joints_poses]]
+pose_name = "initial_pose"
+client_name = "arm_collision_checked"
+positions = [0.0, 0.17, 0.56, 0.0, 0.38, 0.0]
+</code></pre>
+<h3 id="config-file-for-teleop-1"><a class="header" href="#config-file-for-teleop-1">Config file for teleop</a></h3>
+<p>Teleop fileはROSののものと同様にできます。</p>
+<pre><code class="language-toml">robot_config_path = "robot_client_config_for_ros2.toml"
+
+[control_nodes_config]
+joints_pose_sender_config.mode = "pose"
+
+[[control_nodes_config.ik_node_teleop_configs]]
+solver_name = "arm_ik_solver"
+joint_trajectory_client_name = "lite6"
+
+[control_nodes_config.ik_node_teleop_configs.config]
+mode = "i k"
+
+[[control_nodes_config.joy_joint_teleop_configs]]
+client_name = "arm_collision_checked"
+
+[control_nodes_config.joy_joint_teleop_configs.config]
+mode = "lite6"
+</code></pre>
+<h2 id="note-2"><a class="header" href="#note-2">Note</a></h2>
+<p>See also <a href="https://github.com/xArm-Developer/xarm_ros">xarm_ros</a> and <a href="https://github.com/xArm-Developer/xarm_ros2">xarm_ros2</a>, <a href="https://github.com/openrr/openrr-apps-ufactory-lite6">openrr-apps-ufactory-lite6</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="openrr-apps-usage"><a class="header" href="#openrr-apps-usage">OpenRR Apps Usage</a></h1>
+<ol>
+<li><a href="reference/apps/robot_command.html">openrr_apps_robot_command</a></li>
+<li><a href="reference/apps/robot_teleop.html">openrr_apps_robot_teleop</a></li>
+<li><a href="reference/apps/joint_position_sender.html">openrr_apps_joint_position_sender</a></li>
+<li><a href="reference/apps/velocity_sender.html">openrr_apps_velocity_sender</a></li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="openrr_apps_robot_command"><a class="header" href="#openrr_apps_robot_command">openrr_apps_robot_command</a></h1>
+<p><code>openrr_apps_robot_command</code>ではロボットにいくつかの司令を送ることができます。</p>
+<pre><code class="language-bash">openrr_apps_robot_command [OPTIONS] [SUBCOMMAND]
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Description</th></tr></thead><tbody>
+<tr><td>-c, --config-path &lt;CONFIG_PATH&gt;</td><td>設定ファイルへのパス</td></tr>
+<tr><td>--config &lt;CONFIG&gt;</td><td>デフォルトまたは設定ファイルで指定した設定の上書き</td></tr>
+<tr><td>-h, --help</td><td>ヘルプの出力</td></tr>
+<tr><td>-i, --interactive</td><td>対話モードの使用</td></tr>
+<tr><td>--log-directory &lt;LOG_DIRECTORY&gt;</td><td>FileAppenderでログを出力するパスの指定</td></tr>
+<tr><td>--show-default-config</td><td>デフォルトの設定ファイルの出力</td></tr>
+</tbody></table>
+</div><div class="table-wrapper"><table><thead><tr><th>Subcommands</th><th>Description</th></tr></thead><tbody>
+<tr><td>cancel_navigation_goal</td><td>ナビゲーションゴールのキャンセル</td></tr>
+<tr><td>execute_command</td><td>外部コマンドの実行</td></tr>
+<tr><td>get_navigation_current_pose</td><td>現在位置の出力</td></tr>
+<tr><td>get_state</td><td>ジョイントの姿勢と該当する手先位置の取得</td></tr>
+<tr><td>help</td><td>ヘルプの出力</td></tr>
+<tr><td>list</td><td>使用可能なクライアントの一覧を出力</td></tr>
+<tr><td>load_commands</td><td>ファイルからコマンドを読み込み実行</td></tr>
+<tr><td>move_ik</td><td>IKをもとに動く <a href="reference/apps/robot_command.html#move_ik%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9">move_Ik</a></td></tr>
+<tr><td>send_base_velocity</td><td>ベースの速度を送信 <a href="reference/apps/robot_command.html#send_base_velocity%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9">send_base_velocity</a></td></tr>
+<tr><td>send_joints</td><td>ジョイントの姿勢を送信 <a href="reference/apps/robot_command.html#send_joints%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9">send_joints</a></td></tr>
+<tr><td>send_joints_pose</td><td>あらかじめ設定された姿勢の送信 <a href="reference/apps/robot_command.html#send_joints_pose%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9">send_joints_pose</a></td></tr>
+<tr><td>send_navigation_goal</td><td>ナビゲーションゴールの送信 <a href="reference/apps/robot_command.html#send_navigation_goal%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9">send_navigation_goal</a></td></tr>
+<tr><td>shell_completion</td><td>シェル補完ファイルの出力 <a href="reference/apps/robot_command.html#shell_completion%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9">shell_completion</a></td></tr>
+<tr><td>speak</td><td>テキストの発話</td></tr>
+</tbody></table>
+</div>
+<h2 id="例"><a class="header" href="#例">例</a></h2>
+<p>シミュレータ上でロボットを起動します。</p>
+<pre><code class="language-bash">urdf-viz ./openrr-planner/sample.urdf &amp;
+</code></pre>
+<p><img src="reference/apps/image/urdf-viz.png" alt="urdf_viz" /></p>
+<p>そのあとコマンドを読み込みます。</p>
+<pre><code class="language-bash">openrr_apps_robot_command \
+    --config-path ./openrr-apps/config/sample_robot_client_config_for_urdf_viz.toml \
+    load_commands ./openrr-apps/command/sample_cmd_urdf_viz.txt
+</code></pre>
+<h2 id="例---config"><a class="header" href="#例---config">例 (--config)</a></h2>
+<p>1つ前の例に<code>--config</code>引数を追加してみます。<code>urdf-viz</code>上で実行するのを見てもいいのですが、簡単のために<code>load_commands</code>を<code>list</code>に変更しています。</p>
+<pre><code class="language-bash">urdf-viz ./openrr-planner/sample.urdf &amp;
+openrr_apps_robot_command \
+    --config-path ./openrr-apps/config/sample_robot_client_config_for_urdf_viz.toml \
+    list
+</code></pre>
+<p>まず何もせずに実行すれば、先程の前半部分のような出力が得られます。</p>
+<pre><code class="language-bash">Raw joint trajectory clients
+    r_arm
+    l_arm
+Joint trajectory clients
+    r_arm
+    r_arm_ik
+    l_arm_collision_checked
+    l_arm_ik
+    r_arm_collision_checked
+    l_arm
+Collision check clients
+    l_arm_collision_checked
+    r_arm_collision_checked
+Ik clients
+    r_arm_ik
+    l_arm_ik
+</code></pre>
+<p><code>--config</code>引数では、<code>--config-path</code>の内容を上書きすることができます。したがって、</p>
+<pre><code class="language-bash">urdf-viz ./openrr-planner/sample.urdf &amp;
+openrr_apps_robot_command \
+    --config-path ./openrr-apps/config/sample_robot_client_config_for_urdf_viz.toml \
+    --config openrr_clients_config.ik_clients_configs[0].name=\"user_defined_ik\" \
+    list
+</code></pre>
+<p>とすると、</p>
+<pre><code class="language-bash">Raw joint trajectory clients
+    l_arm
+    r_arm
+Joint trajectory clients
+    l_arm
+    r_arm_collision_checked
+    l_arm_collision_checked
+    r_arm
+    r_arm_ik
+    user_defined_ik
+Collision check clients
+    r_arm_collision_checked
+    l_arm_collision_checked
+Ik clients
+    r_arm_ik
+    user_defined_ik
+</code></pre>
+<p>というようにして左アーム用のIKクライアント名が<code>user_defined_ik</code>に変更されました。もちろんこれは直接tomlファイルを書き換えることでも実現できます。</p>
+<p><code>load_commands</code>のまま実行する場合は、<code>openrr-apps/command/sample_cmd_urdf_viz.txt</code>内の<code>l_arm_ik</code>を<code>user_defined_ik</code>に変える必要があります。</p>
+<h2 id="move_ikの使い方"><a class="header" href="#move_ikの使い方">move_ikの使い方</a></h2>
+<pre><code class="language-bash">openrr_apps_robot_command move_ik [OPTIONS] &lt;NAME&gt;
+</code></pre>
+<h3 id="name"><a class="header" href="#name">Name</a></h3>
+<p>IKクライアント名</p>
+<h3 id="option"><a class="header" href="#option">Option</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Description</th></tr></thead><tbody>
+<tr><td>-d, --duration <DURATION></td><td>到達までかける時間</td></tr>
+<tr><td>-h, --help</td><td>ヘルプの出力</td></tr>
+<tr><td>-i, --interpolate</td><td>デカルト座標系　補間　IKクライアント名を指定</td></tr>
+<tr><td>-l, --local</td><td></td></tr>
+<tr><td>--max_resolution_for_interpolation &lt;MAX_RESOLUTION_FOR_INTERPOLATION&gt;</td><td>最大の補間分解能 (default 0.5)</td></tr>
+<tr><td>--min_number_of_points_for_interpolation &lt;MIN_NUMBER_OF_POINTS_FOR_INTERPOLATION&gt;</td><td>最小の補間点数 (default 10)</td></tr>
+<tr><td>-r, --roll <ROLL></td><td>目標のロール角</td></tr>
+<tr><td>-p, --pitch <PITCH></td><td>目標のピッチ角</td></tr>
+<tr><td>--yaw <YAW></td><td>目標のヨー角</td></tr>
+<tr><td>-x, --x <X></td><td>目標のx座標</td></tr>
+<tr><td>-y, --y <Y></td><td>目標のy座標</td></tr>
+<tr><td>-z, --z <Z></td><td>目標のz座標</td></tr>
+</tbody></table>
+</div>
+<h2 id="send_base_velocityの使い方"><a class="header" href="#send_base_velocityの使い方">send_base_velocityの使い方</a></h2>
+<pre><code class="language-bash">openrr_apps_robot_command send_base_velocity [OPTIONS] &lt;X&gt; &lt;Y&gt; &lt;THETA&gt;
+</code></pre>
+<h3 id="x"><a class="header" href="#x">X</a></h3>
+<p>x方向の速度</p>
+<h3 id="y"><a class="header" href="#y">Y</a></h3>
+<p>y方向の速度</p>
+<h3 id="theta"><a class="header" href="#theta">Theta</a></h3>
+<p>角速度</p>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Description</th></tr></thead><tbody>
+<tr><td>-d, --duration_secs &lt;DURATION_SECS&gt;</td><td>継続する時間</td></tr>
+<tr><td>-h, --help</td><td>ヘルプの出力</td></tr>
+</tbody></table>
+</div>
+<h2 id="send_jointsの使い方"><a class="header" href="#send_jointsの使い方">send_jointsの使い方</a></h2>
+<pre><code class="language-bash">openrr_apps_robot_command send_joints [OPTIONS] &lt;NAME&gt;
+</code></pre>
+<h3 id="name-1"><a class="header" href="#name-1">Name</a></h3>
+<p>クライアント名</p>
+<h3 id="option-1"><a class="header" href="#option-1">Option</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Description</th></tr></thead><tbody>
+<tr><td>-d, --duration <DURATION></td><td>到達までかける時間</td></tr>
+<tr><td>-h, --help</td><td>ヘルプの出力</td></tr>
+<tr><td>-i, --interpolate</td><td>目標を直交座標系での補間する</td></tr>
+<tr><td>-j, --joint <JOINT></td><td>ジョイント番号</td></tr>
+<tr><td>--max_resolution_for_interpolation &lt;MAX_RESOLUTION_FOR_INTERPOLATION&gt;</td><td>最大の補間分解能 (default 0.05)</td></tr>
+<tr><td>--min_number_of_points_for_interpolation &lt;MIN_NUMBER_OF_POINTS_FOR_INTERPOLATION&gt;</td><td>最小の補間点数 (default 10)</td></tr>
+</tbody></table>
+</div>
+<h2 id="send_joints_poseの使い方"><a class="header" href="#send_joints_poseの使い方">send_joints_poseの使い方</a></h2>
+<pre><code class="language-bash">openrr_apps_robot_command send_joints_pose [OPTIONS] &lt;NAME&gt; &lt;POSE_NAME&gt;
+</code></pre>
+<h3 id="name-2"><a class="header" href="#name-2">Name</a></h3>
+<p>クライアント名</p>
+<h3 id="pose-name"><a class="header" href="#pose-name">Pose name</a></h3>
+<p>ポーズ名</p>
+<h3 id="option-2"><a class="header" href="#option-2">Option</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Description</th></tr></thead><tbody>
+<tr><td>-d, --duration <DURATION></td><td>到達までかける時間</td></tr>
+<tr><td>-h, --help</td><td>ヘルプの出力</td></tr>
+</tbody></table>
+</div>
+<h2 id="send_navigation_goalの使い方"><a class="header" href="#send_navigation_goalの使い方">send_navigation_goalの使い方</a></h2>
+<pre><code class="language-bash">openrr_apps_robot_command send_navigation_goal [OPTIONS] &lt;X&gt; &lt;Y&gt; &lt;YAW&gt;
+</code></pre>
+<h3 id="option-3"><a class="header" href="#option-3">Option</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Description</th></tr></thead><tbody>
+<tr><td>-f, --frame_id &lt;FRAME_ID&gt;</td><td></td></tr>
+<tr><td>-h, --help</td><td>ヘルプの出力</td></tr>
+<tr><td>-t, --timeout_secs &lt;TIMEOUT_SECS&gt;</td><td>タイムアウトまでの秒数</td></tr>
+</tbody></table>
+</div>
+<h2 id="shell_completionの使い方"><a class="header" href="#shell_completionの使い方">shell_completionの使い方</a></h2>
+<pre><code class="language-bash">openrr_apps_robot_command shell_completion &lt;SUBCOMMAND&gt;
+</code></pre>
+<h3 id="subcommand"><a class="header" href="#subcommand">Subcommand</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Subcommand</th><th>Description</th></tr></thead><tbody>
+<tr><td>bash</td><td></td></tr>
+<tr><td>fish</td><td></td></tr>
+<tr><td>help</td><td>ヘルプの出力</td></tr>
+<tr><td>power_shell</td><td></td></tr>
+<tr><td>zsh</td><td></td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="openrr_apps_robot_teleop"><a class="header" href="#openrr_apps_robot_teleop">openrr_apps_robot_teleop</a></h1>
+<p><code>openrr_apps_robot_teleop</code>では今まではGUIアプリケーション上で操作していたものをジョイスティックなどで遠隔で操作できるようになっています。</p>
+<pre><code class="language-bash">openrr_apps_robot_teleop
+</code></pre>
+<h2 id="使い方"><a class="header" href="#使い方">使い方</a></h2>
+<pre><code class="language-bash">openrr_apps_robot_teleop [OPTIONS]
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Description</th></tr></thead><tbody>
+<tr><td>-c, --config-path &lt;CONFIG_PATH&gt;</td><td>設定ファイルへのパス</td></tr>
+<tr><td>-h, --help</td><td>ヘルプの出力</td></tr>
+<tr><td>--log-directory &lt;LOG_DIRECTORY&gt;</td><td>FileAppenderでログを出力するパスの指定</td></tr>
+<tr><td>--robot-config &lt;ROBOT_CONFIG&gt;</td><td>デフォルトまたは設定ファイルで指定した設定の上書き (robot config file)</td></tr>
+<tr><td>--show-default-config</td><td>デフォルトの設定ファイルの出力</td></tr>
+<tr><td>--teleop-config &lt;TELEOP_CONFIG&gt;</td><td>デフォルトまたは設定ファイルで指定した設定の上書き (teleop config file)</td></tr>
+</tbody></table>
+</div>
+<h2 id="例-1"><a class="header" href="#例-1">例</a></h2>
+<p>ボタンの名前は、<a href="https://docs.rs/gilrs/latest/gilrs/#controller-layout">gilrs layout</a>に従っています。</p>
+<p><code>urdf-viz</code>を起動します。その後、ゲームパッドをPCに接続し、Teleop用の設定ファイルを読み込み実行します。</p>
+<pre><code class="language-bash">urdf-viz ./openrr-planner/sample.urdf &amp;
+openrr_apps_robot_teleop \
+    --config-path ./openrr-apps/config/sample_teleop_config_urdf_viz.toml
+</code></pre>
+<p>割り当てたモード選択ボタン（デフォルトでは<code>North</code>）を押すとモードが切り替わり、サブモード選択ボタン（デフォルトでは<code>East</code>）ではサブモードが切り替わります。</p>
+<pre><code class="language-bash">PrintSpeaker: l_arm0
+PrintSpeaker: r_arm0
+PrintSpeaker: base
+PrintSpeaker: left i k
+PrintSpeaker: right i k
+PrintSpeaker: pose l_arm_collision_checked zero
+PrintSpeaker: l_arm0
+PrintSpeaker: r_arm0
+PrintSpeaker: r_arm1
+PrintSpeaker: r_arm2
+</code></pre>
+<h2 id="例--teleop-config"><a class="header" href="#例--teleop-config">例(--teleop-config)</a></h2>
+<pre><code class="language-bash">openrr_apps_robot_teleop \
+    --config-path ./openrr-apps/config/sample_teleop_config_urdf_viz.toml \
+    --teleop-config gamepad=\"keyboard\"
+</code></pre>
+<p>これは、<a href="reference/apps/../apps/robot_command.html#example---config"><code>openrr_apps_robot_command</code> Example (--config)</a>の例(--config)と同じようにして、既存の設定を上書きするというものです。</p>
+<p>この例ではデフォルトであったゲームパッドでの操作をキーボードからの操作に切り替えています。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="openrr_apps_joint_position_sender-1"><a class="header" href="#openrr_apps_joint_position_sender-1">openrr_apps_joint_position_sender</a></h1>
+<p><code>openrr_apps_joint_position_sender</code>ではマニピュレータなど関節ロボットについての各関節の値を指定することができます。</p>
+<pre><code class="language-bash">openrr_apps_joint_position_sender
+</code></pre>
+<p><img src="reference/apps/image/joint_pose_sender.png" alt="joint_pose_sender" /></p>
+<h2 id="使い方-1"><a class="header" href="#使い方-1">使い方</a></h2>
+<pre><code class="language-bash">openrr_apps_joint_position_sender [OPTIONS]
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Description</th></tr></thead><tbody>
+<tr><td>-c, --config-path &lt;CONFIG_PATH&gt;</td><td>設定ファイルへのパス</td></tr>
+<tr><td>--config &lt;CONFIG&gt;</td><td>デフォルトまたは設定ファイルで指定した設定の上書き</td></tr>
+<tr><td>-h, --help</td><td>ヘルプの出力</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="openrr_apps_velocity_sender-1"><a class="header" href="#openrr_apps_velocity_sender-1">openrr_apps_velocity_sender</a></h1>
+<p><code>openrr_apps_velocity_sender</code>では移動ロボットを動かすための速度を指定することができます。</p>
+<pre><code class="language-bash">openrr_apps_velocity_sender
+</code></pre>
+<p><img src="reference/apps/image/velocity_sender.png" alt="velocity_sender" /></p>
+<h2 id="使い方-2"><a class="header" href="#使い方-2">使い方</a></h2>
+<pre><code class="language-bash">openrr_apps_velocity_sender [OPTIONS]
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Description</th></tr></thead><tbody>
+<tr><td>-c, --config-path &lt;CONFIG_PATH&gt;</td><td>設定ファイルへのパス</td></tr>
+<tr><td>--config &lt;CONFIG&gt;</td><td>デフォルトまたは設定ファイルで指定した設定の上書き</td></tr>
+<tr><td>-h, --help</td><td>ヘルプの出力</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="openrr-apps-configuration"><a class="header" href="#openrr-apps-configuration">OpenRR Apps Configuration</a></h1>
+<ol>
+<li><a href="reference/apps-config/client.html">Client config</a></li>
+<li><a href="reference/apps-config/teleop.html">Teleop config</a></li>
+<li><a href="reference/apps-config/env.html">Environmental Variables</a></li>
+<li><a href="reference/apps-config/overwrite.html">Overwrite configuration at startup</a></li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="client-config"><a class="header" href="#client-config">Client config</a></h1>
+<h2 id="configを書く"><a class="header" href="#configを書く">configを書く</a></h2>
+<p>configを自分で書くことで、サンプルにないロボットや独自に作成したロボットがOpenRRで動くようになります。configには以下の要素を書くことができます。</p>
+<p>また、VSCodeを使用している方は<a href="https://github.com/openrr/openrr/tree/main/openrr-apps#schemas-for-config-files">こちら</a>から拡張機能の<code>EvenBetterTOML</code>を導入することを推奨します。</p>
+<h2 id="default-config"><a class="header" href="#default-config">Default config</a></h2>
+<p>デフォルトは以下のようになっています。読み込んだconfigに応じて設定が追加または上書きされます。</p>
+<pre><code class="language-bash">openrr_apps_robot_command --show-default-config
+</code></pre>
+<pre><code class="language-toml">[speak_configs]
+
+[openrr_clients_config]
+self_collision_check_pairs = []
+
+[openrr_clients_config.ik_solvers_configs]
+
+[plugins]
+</code></pre>
+<h2 id="robot_config"><a class="header" href="#robot_config">robot_config</a></h2>
+<p>Client configに書く項目の一覧になります。リポジトリにあるサンプルもぜひご参考に。サンプルは<a href="https://github.com/openrr/openrr/tree/main/openrr-apps/config">こちら</a>から。</p>
+<div class="table-wrapper"><table><thead><tr><th>Properties</th><th>Description</th><th>Type</th></tr></thead><tbody>
+<tr><td>joint_trajectory_clients</td><td>使用するJoint trajectory clients</td><td>array string</td></tr>
+<tr><td>localization</td><td>使用するLocalizationの指定。 <code>ros</code>、<code>urdf-viz</code>、<code>false</code>、もしくはプラグインの名前。</td><td>string or boolean</td></tr>
+<tr><td>move_base</td><td>使用するMoveBaseの指定。 <code>ros</code>、<code>urdf-viz</code>、<code>false</code>、もしくはプラグインの名前。</td><td>string or boolean</td></tr>
+<tr><td>navigation</td><td>使用するNavigationの指定。 <code>ros</code>、<code>urdf-viz</code>、<code>false</code>、もしくはプラグインの名前。</td><td>string or boolean</td></tr>
+<tr><td><a href="reference/apps-config/client.html#openrr-clients-config">openrr_clients_config</a></td><td>OpenRR clientの設定。</td><td></td></tr>
+<tr><td><a href="reference/apps-config/client.html#ros-control-action-client-config">ros_action_clients_configs</a></td><td>ROS Action Clientの設定。</td><td>array <a href="reference/apps-config/client.html#ros-control-action-client-config">RosControlActionClientConfig</a></td></tr>
+<tr><td>plugins</td><td>プラグインの設定。</td><td></td></tr>
+<tr><td><a href="reference/apps-config/client.html#ros-control-client-config">ros_clients_configs</a></td><td>ros_clients_configs</td><td></td></tr>
+<tr><td><a href="reference/apps-config/client.html#ros-cmdvel-movebase-client-config">ros_cmd_vel_move_base_client_config</a></td><td><code>ROS MoveBase</code>の設定。<code>.topic</code>を付加して送りたいトピックを指定。</td><td></td></tr>
+<tr><td><a href="reference/apps-config/client.html#ros-localization-client-config">ros_localization_client_config</a></td><td><code>ROS Localization</code>の設定。要素の有効無効の指定。</td><td></td></tr>
+<tr><td><a href="reference/apps-config/client.html#ros-navigation-client-config">ros_navigation_client_config</a></td><td><code>ROS Navigation</code>の設定。要素の有効無効の指定。</td><td></td></tr>
+<tr><td>speak_configs</td><td>speakの設定。</td><td><a href="reference/apps-config/client.html#speak-config">SpeakConfig</a></td></tr>
+<tr><td>speakers</td><td>使用するSpeakersの指定。</td><td>string</td></tr>
+<tr><td>urdf_viz_clients_configs</td><td>urdf_vizの設定。</td><td></td></tr>
+</tbody></table>
+</div>
+<h2 id="joint_trajectory_clients"><a class="header" href="#joint_trajectory_clients"><code>joint_trajectory_clients</code></a></h2>
+<p>Type: array string</p>
+<h2 id="localization-move_base-navigation"><a class="header" href="#localization-move_base-navigation"><code>localization</code>, <code>move_base</code>, <code>navigation</code></a></h2>
+<p>Type: string or boolean</p>
+<h3 id="example"><a class="header" href="#example">Example</a></h3>
+<pre><code class="language-toml">move_base = false
+</code></pre>
+<pre><code class="language-toml">navigation = "arci_ros2"
+</code></pre>
+<h2 id="openrr_clients_config"><a class="header" href="#openrr_clients_config"><code>openrr_clients_config</code></a></h2>
+<h3 id="openrr-clients-config"><a class="header" href="#openrr-clients-config">OpenRR Clients Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>OpenRR Clients Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>collision_check_clients_configs</td><td><a href="reference/apps-config/client.html#collision-check-client-config">CollisionCheckClientConfig</a></td></tr>
+<tr><td>ik_clients_configs</td><td><a href="reference/apps-config/client.html#ik-client-config">IkClientConfig</a></td></tr>
+<tr><td>ik_solvers_configs</td><td><a href="reference/apps-config/client.html#ik-solver-config">IkSolverConfig</a></td></tr>
+<tr><td>joint_trajectory_clients_container_configs</td><td><a href="reference/apps-config/client.html#joint-trajectory-client-container-config">JointTrajectoryClientsContainerConfig</a></td></tr>
+<tr><td>joint_poses</td><td><a href="reference/apps-config/client.html#joints-pose">JointsPose</a></td></tr>
+<tr><td>self_collision_check_pairs</td><td>array string</td></tr>
+<tr><td>urdf_full_path</td><td>string</td></tr>
+<tr><td>urdf_path</td><td>string</td></tr>
+</tbody></table>
+</div>
+<h4 id="example-1"><a class="header" href="#example-1">Example</a></h4>
+<pre><code class="language-toml">[openrr_clients_config]
+urdf_path = "./twin_arms_robot.urdf"
+self_collision_check_pairs = [
+    "left_shoulder:left_gripper",
+    "right_shoulder:right_gripper"
+]
+</code></pre>
+<h3 id="collision-check-client-config"><a class="header" href="#collision-check-client-config">Collision Check Client Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Collision Check Client Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>client_name</td><td>string (required)</td></tr>
+<tr><td>name</td><td>string (required)</td></tr>
+<tr><td>self_collision_checker_config</td><td><a href="reference/apps-config/client.html#self-collision-checker-config">SelfCollisionCheckerConfig</a></td></tr>
+</tbody></table>
+</div>
+<h4 id="example-2"><a class="header" href="#example-2">Example</a></h4>
+<pre><code class="language-toml">[[openrr_clients_config.collision_check_clients_configs]]
+client_name = "arm_with_torso"
+name = "arm_with_torso_collision_checked"
+</code></pre>
+<h3 id="self-collision-checker-config"><a class="header" href="#self-collision-checker-config">Self Collision Checker Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Self Collision Checker Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>prediction</td><td>double (default 0.001)</td></tr>
+<tr><td>time_interpolate_rate</td><td>double (default 0.5)</td></tr>
+</tbody></table>
+</div>
+<h3 id="ik-client-config"><a class="header" href="#ik-client-config">IK Client Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>IK Client Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>client_name</td><td>string (required)</td></tr>
+<tr><td>name</td><td>string (required)</td></tr>
+<tr><td>solver_name</td><td>string (required)</td></tr>
+</tbody></table>
+</div>
+<h4 id="example-3"><a class="header" href="#example-3">Example</a></h4>
+<pre><code class="language-toml">[[openrr_clients_config.ik_clients_configs]]
+name = "arm_with_torso_ik"
+client_name = "arm_with_torso_collision_checked"
+solver_name = "arm_with_torso_ik_solver"
+</code></pre>
+<h3 id="ik-solver-config"><a class="header" href="#ik-solver-config">IK Solver Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>IK Solver Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>allowable_angle_error_rad</td><td>double (default 0.005)</td></tr>
+<tr><td>allowable_position_error_m</td><td>double (default 0.005)</td></tr>
+<tr><td>constraints</td><td><a href="reference/apps-config/client.html#constraints">Constraints</a></td></tr>
+<tr><td>ik_target</td><td>string (required)</td></tr>
+<tr><td>jacobian_multiplier</td><td>double (default 0.1)</td></tr>
+<tr><td>num_max_try</td><td>uint (default 300)</td></tr>
+<tr><td>root_node_name</td><td>string</td></tr>
+<tr><td>use_random_ik</td><td>boolean (default false)</td></tr>
+</tbody></table>
+</div>
+<h4 id="example-4"><a class="header" href="#example-4">Example</a></h4>
+<pre><code class="language-toml">[openrr_clients_config.ik_solvers_configs.arm_with_torso_ik_solver]
+ik_target = "gripper_palm_joint"
+allowable_position_error_m = 0.01
+</code></pre>
+<h3 id="constraints"><a class="header" href="#constraints">Constraints</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Constraints</th><th>Type</th></tr></thead><tbody>
+<tr><td>ignored_joint_names</td><td>array string (default [])</td></tr>
+<tr><td>position_x</td><td>boolean (default true)</td></tr>
+<tr><td>position_y</td><td>boolean (default true)</td></tr>
+<tr><td>position_z</td><td>boolean (default true)</td></tr>
+<tr><td>rotation_x</td><td>boolean (default true)</td></tr>
+<tr><td>rotation_y</td><td>boolean (default true)</td></tr>
+<tr><td>rotation_z</td><td>boolean (default true)</td></tr>
+</tbody></table>
+</div>
+<h3 id="joint-trajectory-client-container-config"><a class="header" href="#joint-trajectory-client-container-config">Joint Trajectory Client Container Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Joint Trajectory Client Container Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>clients_name</td><td>array string (required)</td></tr>
+<tr><td>name</td><td>string</td></tr>
+</tbody></table>
+</div>
+<h3 id="joints-pose"><a class="header" href="#joints-pose">Joints Pose</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Joints Pose</th><th>Type</th></tr></thead><tbody>
+<tr><td>client_name</td><td>string (required)</td></tr>
+<tr><td>pose_name</td><td>string (required)</td></tr>
+<tr><td>positions</td><td>array double (required)</td></tr>
+</tbody></table>
+</div>
+<h4 id="example-5"><a class="header" href="#example-5">Example</a></h4>
+<pre><code class="language-toml">[[openrr_clients_config.joints_poses]]
+pose_name = "stand by"
+client_name = "arm"
+positions = [0.0, 1.2, 0.0, -0.7, 0.0, -0.2, 0.0]
+</code></pre>
+<h2 id="ros_action_clients_configs"><a class="header" href="#ros_action_clients_configs"><code>ros_action_clients_configs</code></a></h2>
+<h3 id="ros-control-action-client-config"><a class="header" href="#ros-control-action-client-config">ROS Control Action Client Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>ROS Control Action Client Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>complete_allowable_errors</td><td>array double (required)</td></tr>
+<tr><td>complete_timeout_sec</td><td>double (default 10.0)</td></tr>
+<tr><td>controller_name</td><td>string (required)</td></tr>
+<tr><td>joint_names</td><td>array string (required)</td></tr>
+<tr><td>joint_position_difference_limits</td><td>array double</td></tr>
+<tr><td>joint_position_limiter_strategy</td><td><a href="reference/apps-config/client.html#joint-position-limiter-strategy">JointPositionLimiterStrategy</a></td></tr>
+<tr><td>joint_position_limits</td><td><a href="reference/apps-config/client.html#joint-position-limit">JointPositionLimit</a></td></tr>
+<tr><td>joint_velocity_limits</td><td>array double</td></tr>
+<tr><td>name</td><td>string (required)</td></tr>
+<tr><td>send_partial_joints_goal</td><td>boolean (default false)</td></tr>
+<tr><td>state_topic_name</td><td>string (required)</td></tr>
+<tr><td>wrap_with_joint_position_difference_limiter</td><td>boolean (default false)</td></tr>
+<tr><td>wrap_with_joint_position_limiter</td><td>boolean (default false)</td></tr>
+<tr><td>wrap_with_joint_velocity_limiter</td><td>boolean (default false)</td></tr>
+</tbody></table>
+</div>
+<h3 id="joint-position-limiter-strategy"><a class="header" href="#joint-position-limiter-strategy">Joint Position Limiter Strategy</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Joint Position Limiter Strategy</th><th>Element</th></tr></thead><tbody>
+<tr><td>string (enum)</td><td>"Clamp", "ClampWithWarn", "Error"</td></tr>
+</tbody></table>
+</div>
+<h3 id="joint-position-limit"><a class="header" href="#joint-position-limit">Joint Position Limit</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Joint Position Limit</th><th>Type</th></tr></thead><tbody>
+<tr><td>lower</td><td>double</td></tr>
+<tr><td>upper</td><td>double</td></tr>
+</tbody></table>
+</div>
+<h4 id="example-6"><a class="header" href="#example-6">Example</a></h4>
+<pre><code class="language-toml">[[urdf_viz_clients_configs]]
+name = "foo"
+joint_names = ["bar1", "bar2"]
+joint_position_limits = [
+    { lower = -3.0, upper = 3.0 },
+    { lower = -2.0, upper = 1.5 },
+]
+</code></pre>
+<h2 id="plugins"><a class="header" href="#plugins"><code>plugins</code></a></h2>
+<div class="table-wrapper"><table><thead><tr><th>plugin config</th><th>Type</th></tr></thead><tbody>
+<tr><td>instances</td><td><a href="reference/apps-config/client.html#plugin-instance">PluginInstance</a></td></tr>
+<tr><td>path</td><td></td></tr>
+</tbody></table>
+</div><div class="table-wrapper"><table><thead><tr><th>Plugin Instance</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td>args</td><td>string</td><td>Arguments passed when creating this instance.</td></tr>
+<tr><td>args_from_path</td><td>string</td><td>Pass the contents of the specified file as an argument.</td></tr>
+<tr><td>path</td><td>string (required)</td><td>Path to the plugin. If no extension is specified, the default extension for <code>cdylib</code> on the current OS will be selected. (linux: <code>.so</code>, macos: <code>.dylib</code>, windows: <code>.dll</code>)</td></tr>
+<tr><td>type</td><td><a href="reference/apps-config/client.html#plugin-instance-kind">PluginInstanceKind</a></td><td></td></tr>
+</tbody></table>
+</div>
+<h3 id="plugin-instance-kind"><a class="header" href="#plugin-instance-kind">Plugin Instance Kind</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Joint Position Limiter Strategy</th><th>Element</th></tr></thead><tbody>
+<tr><td>string (enum)</td><td>"JointTrajectoryClient", Localization", MoveBase", Navigation", "Speaker"</td></tr>
+</tbody></table>
+</div>
+<h2 id="ros_clients_configs"><a class="header" href="#ros_clients_configs"><code>ros_clients_configs</code></a></h2>
+<h3 id="ros-control-client-config"><a class="header" href="#ros-control-client-config">ROS Control Client Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>ROS Control Client Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>complete_allowable_errors</td><td>array double</td></tr>
+<tr><td>complete_timeout_sec</td><td>double</td></tr>
+<tr><td>controller_name</td><td>string</td></tr>
+<tr><td>joint_names</td><td>array string</td></tr>
+<tr><td>joint_position_limits</td><td>array <a href="reference/apps-config/client.html#joint-position-limit">JointPositionLimit</a></td></tr>
+<tr><td>joint_velocity_limits</td><td>array double</td></tr>
+<tr><td>name</td><td>string</td></tr>
+<tr><td>send_partial_joints_goal</td><td>boolean</td></tr>
+<tr><td>state_topic_name</td><td>string</td></tr>
+<tr><td>wrap_with_joint_position_limiter</td><td>boolean (false)</td></tr>
+<tr><td>wrap_with_joint_velocity_limiter</td><td>boolean (false)</td></tr>
+</tbody></table>
+</div>
+<h3 id="joint-position-limit-1"><a class="header" href="#joint-position-limit-1">Joint Position Limit</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Joint Position Limit</th><th>Type</th></tr></thead><tbody>
+<tr><td>lower</td><td>double</td></tr>
+<tr><td>upper</td><td>double</td></tr>
+</tbody></table>
+</div>
+<h4 id="example-7"><a class="header" href="#example-7">Example</a></h4>
+<pre><code class="language-toml">[[ros_clients_configs]]
+name = "arm"
+joint_names = [
+    "shoulder_joint",
+    "shoulder_joint",
+    "upper_arm_roll_joint",
+    "elbow_flex_joint",
+    "forearm_roll_joint",
+    "wrist_flex_joint",
+    "wrist_roll_joint",
+]
+complete_allowable_errors = [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01]
+controller_name = "arm_controller"
+state_topic_name = "arm_controller/openrr/state"
+</code></pre>
+<h2 id="ros_cmd_vel_move_base_client_config"><a class="header" href="#ros_cmd_vel_move_base_client_config"><code>ros_cmd_vel_move_base_client_config</code></a></h2>
+<h3 id="ros-cmd_vel-movebase-client-config"><a class="header" href="#ros-cmd_vel-movebase-client-config">ROS cmd_vel MoveBase Client Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>ROS cmd_vel MoveBase Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>topic</td><td>string</td></tr>
+</tbody></table>
+</div>
+<h2 id="ros_localization_client_config"><a class="header" href="#ros_localization_client_config"><code>ros_localization_client_config</code></a></h2>
+<h3 id="ros-localization-client-config"><a class="header" href="#ros-localization-client-config">ROS Localization Client Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>ROS Localization Client Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>request_final_nomotion_update_hack</td><td>boolean</td></tr>
+</tbody></table>
+</div>
+<h2 id="ros_navigation_client_config"><a class="header" href="#ros_navigation_client_config"><code>ros_navigation_client_config</code></a></h2>
+<h3 id="ros-navigation-client-config"><a class="header" href="#ros-navigation-client-config">ROS Navigation Client Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>ROS Navigation Client Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>clear_costmap_before_start</td><td>boolean</td></tr>
+<tr><td>request_final_nomotion_update_hack</td><td>boolean</td></tr>
+</tbody></table>
+</div>
+<h2 id="speak_configs"><a class="header" href="#speak_configs"><code>speak_configs</code></a></h2>
+<h3 id="speak-config"><a class="header" href="#speak-config">Speak Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Speak Config</th><th>Element</th></tr></thead><tbody>
+<tr><td>string(enum)</td><td><code>"Print"</code>, <code>"Audio"</code>, <code>"Command"</code> or <code>"RosEspeak"</code></td></tr>
+</tbody></table>
+</div><div class="table-wrapper"><table><thead><tr><th>"RosEspeak"</th><th>Type</th></tr></thead><tbody>
+<tr><td>config</td><td><a href="reference/apps-config/client.html#ros-espeak-client-config">RosEspeakClientConfig</a></td></tr>
+</tbody></table>
+</div><div class="table-wrapper"><table><thead><tr><th>"Audio"</th><th>Type</th></tr></thead><tbody>
+<tr><td>args</td><td>map (required)</td></tr>
+</tbody></table>
+</div><div class="table-wrapper"><table><thead><tr><th>map</th><th>Type</th></tr></thead><tbody>
+<tr><td>{name}</td><td>string</td></tr>
+</tbody></table>
+</div>
+<h3 id="ros-espeak-client-config"><a class="header" href="#ros-espeak-client-config">ROS Espeak Client Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>ROS Espeak Client Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>topic</td><td>string</td></tr>
+</tbody></table>
+</div>
+<h4 id="example-audio"><a class="header" href="#example-audio">Example (Audio)</a></h4>
+<pre><code class="language-toml">[speak_configs."foo"]
+type = "Audio"
+
+[speak_configs."foo".args.map]
+bar = "./bar.mp3" # Path to audio file
+</code></pre>
+<pre><code class="language-bash">openrr_apps_robot_command --config-path {path to toml} speak foo bar
+</code></pre>
+<h4 id="example-rosespeak"><a class="header" href="#example-rosespeak">Example (ROSEspeak)</a></h4>
+<pre><code class="language-toml">[speak_configs.espeak]
+type = "RosEspeak"
+
+[speak_configs.espeak.args.config]
+topic = "/sample/message"
+</code></pre>
+<pre><code class="language-bash">openrr_apps_robot_command --config-path {path to toml} -i
+&gt;  speak espeak Hello!
+</code></pre>
+<pre><code class="language-bash">data: "Hello!"
+---
+</code></pre>
+<h2 id="speakers"><a class="header" href="#speakers"><code>speakers</code></a></h2>
+<p>Type: string</p>
+<h2 id="urdf_viz_clients_configs"><a class="header" href="#urdf_viz_clients_configs"><code>urdf_viz_clients_configs</code></a></h2>
+<div class="table-wrapper"><table><thead><tr><th>URDF-Viz Web Client Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>joint_names</td><td>array string</td></tr>
+<tr><td>joint_position_limits</td><td>array <a href="reference/apps-config/client.html#joint-position-limit">JointPositionLimit</a></td></tr>
+<tr><td>joint_velocity_limits</td><td>array double</td></tr>
+<tr><td>name</td><td>string</td></tr>
+<tr><td>wrap_with_joint_position_limiter</td><td>boolean (default false)</td></tr>
+<tr><td>wrap_with_joint_velocity_limiter</td><td>boolean (default false)</td></tr>
+</tbody></table>
+</div>
+<h4 id="example-8"><a class="header" href="#example-8">Example</a></h4>
+<pre><code class="language-toml">[[urdf_viz_clients_configs]]
+# `urdf-viz` client name
+name = "arm"
+# List of joints
+joint_names = [
+    "shoulder_yaw",
+    "shoulder_pitch",
+    "shoulder_roll",
+    "elbow_pitch",
+    "wrist_yaw",
+    "wrist_pitch",
+]
+wrap_with_joint_position_limiter = true
+
+# Range of joints
+joint_position_limits = [
+    { lower = -3.0, upper = 3.0 },
+    { lower = -2.0, upper = 1.5 },
+    { lower = -1.5, upper = 2.0 },
+    { lower = -2.0, upper = 1.5 },
+    { lower = -3.0, upper = 3.0 },
+    { lower = -2.0, upper = 2.0 },
+]
+
+[openrr_clients_config]
+# Path to URDF file
+urdf_path = "./sample.urdf"
+self_collision_check_pairs = [
+    "shoulder_yaw:gripper_linear1",
+]
+
+[[openrr_clients_config.collision_check_clients_configs]]
+# Collision check client name
+name = "arm_collision_checked"
+# `urdf-viz` client name
+client_name = "arm"
+
+[[openrr_clients_config.ik_clients_configs]]
+# IK client name
+name = "arm_ik"
+# Collision check client name
+client_name = "arm_collision_checked"
+# IK solver name
+solver_name = "arm_ik_solver"
+
+[[openrr_clients_config.joints_poses]]
+# Position name
+pose_name = "zero"
+# Collision check client name
+client_name = "arm_collision_checked"
+# Position that you want to set
+positions = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+[openrr_clients_config.ik_solvers_configs.arm_ik_solver] # IK solver name (arm_ik_solver)
+ik_target = "tool_fixed"
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="teleop-config-1"><a class="header" href="#teleop-config-1">Teleop config</a></h1>
+<h2 id="configを書く-1"><a class="header" href="#configを書く-1">configを書く</a></h2>
+<p>1つ前ではClientのConfigについて取り上げました。このページはTeleop用の追加Configについて載せてあります。</p>
+<p>requiredと書いてあるものは必須事項です。</p>
+<h2 id="default-config-1"><a class="header" href="#default-config-1">Default config</a></h2>
+<p>デフォルトは以下のようになっています。読み込んだconfigに応じて設定が追加または上書きされます。HashMapで実装されているため、既に設定されたものは上書きされ、新規の設定の場合は追加されます。</p>
+<pre><code class="language-toml">initial_mode = ""
+gamepad = "gilrs"
+
+[control_nodes_config]
+
+[gil_gamepad_config]
+device_id = 0
+
+[gil_gamepad_config.map]
+button_map = [
+    ["DPadLeft",      "DPadLeft"     ],
+    ["Select",        "Select"       ],
+    ["East",          "East"         ],
+    ["DPadUp",        "DPadUp"       ],
+    ["LeftTrigger",   "LeftTrigger"  ],
+    ["DPadDown",      "DPadDown"     ],
+    ["RightTrigger",  "RightTrigger" ],
+    ["RightTrigger2", "RightTrigger2"],
+    ["Start",         "Start"        ],
+    ["LeftTrigger2",  "LeftTrigger2" ],
+    ["Mode",          "Mode"         ],
+    ["DPadRight",     "DPadRight"    ],
+    ["South",         "South"        ],
+    ["North",         "North"        ],
+    ["RightThumb",    "RightThumb"   ],
+    ["LeftThumb",     "LeftThumb"    ],
+    ["West",          "West"         ]
+]
+axis_map = [
+    ["LeftStickY",  "LeftStickY" ],
+    ["LeftStickX",  "LeftStickX" ],
+    ["RightStickX", "RightStickX"],
+    ["DPadY",       "DPadY"      ],
+    ["DPadX",       "DPadX"      ],
+    ["RightStickY", "RightStickY"]
+]
+axis_value_map = [["LeftStickX", -1.0], ["RightStickX", -1.0]]
+
+[plugins]
+</code></pre>
+<h2 id="robot_teleop_config"><a class="header" href="#robot_teleop_config">robot_teleop_config</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Properties</th><th>type</th></tr></thead><tbody>
+<tr><td>control_nodes_config</td><td><a href="reference/apps-config/teleop.html#control_nodes_config">ControlNodesConfig</a> (required)</td></tr>
+<tr><td>gamepad</td><td>GamepadKind(string) (default "gilrs")</td></tr>
+<tr><td>gil_gamepad_config</td><td><a href="reference/apps-config/teleop.html#gil_gamepad_config">GilGamepadConfig</a></td></tr>
+<tr><td>initial_mode</td><td>string</td></tr>
+<tr><td>plugins</td><td><a href="reference/apps-config/teleop.html#teleop-plugin-config">TeleopPluginConfig</a></td></tr>
+<tr><td>robot_config_full_path</td><td>string</td></tr>
+<tr><td>robot_config_path</td><td>string</td></tr>
+</tbody></table>
+</div>
+<h2 id="control_nodes_config"><a class="header" href="#control_nodes_config"><code>control_nodes_config</code></a></h2>
+<h3 id="control-nodes-config"><a class="header" href="#control-nodes-config">Control Nodes Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Control Nodes Config</th><th></th></tr></thead><tbody>
+<tr><td>ik_node_teleop_configs</td><td>array <a href="reference/apps-config/teleop.html#ik-node-teleop-config">IkNodeTeleopConfig</a> (required)</td></tr>
+<tr><td>joints_pose_sender_config</td><td><a href="reference/apps-config/teleop.html#joint-pose-sender-config">JointsPoseSenderConfig</a> (required)</td></tr>
+<tr><td>joy_joint_teleop_configs</td><td>array <a href="reference/apps-config/teleop.html#joy-joint-teleop-config">JoyJointTeleopConfig</a></td></tr>
+<tr><td>move_base_mode</td><td>string</td></tr>
+<tr><td>command_configs</td><td><a href="reference/apps-config/teleop.html#robot-command-config">RobotCommandConfig</a></td></tr>
+</tbody></table>
+</div>
+<h3 id="ik-node-teleop-config"><a class="header" href="#ik-node-teleop-config">IK Node Teleop Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>IK Node Teleop Config</th><th></th></tr></thead><tbody>
+<tr><td>config</td><td><a href="reference/apps-config/teleop.html#ik-node-config">IkNodeConfig</a> (required)</td></tr>
+<tr><td>joint_trajectory_client_name</td><td>string (required)</td></tr>
+<tr><td>solver_name</td><td>string (required)</td></tr>
+</tbody></table>
+</div>
+<h3 id="joint-pose-sender-config"><a class="header" href="#joint-pose-sender-config">Joint Pose Sender Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Joint Pose Sender Config</th><th></th></tr></thead><tbody>
+<tr><td>duration_secs</td><td>double (default 2.0)</td></tr>
+<tr><td>mode</td><td>string  (default "pose")</td></tr>
+</tbody></table>
+</div>
+<h3 id="joy-joint-teleop-config"><a class="header" href="#joy-joint-teleop-config">Joy Joint Teleop Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Joy Joint Teleop Config</th><th></th></tr></thead><tbody>
+<tr><td>client_name</td><td>string</td></tr>
+<tr><td>config</td><td><a href="reference/apps-config/teleop.html#joy-joint-teleop-node-config">JoyJointTeleopNodeConfig</a></td></tr>
+</tbody></table>
+</div>
+<h3 id="ik-node-config"><a class="header" href="#ik-node-config">IK Node Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>IK Node Config</th><th></th></tr></thead><tbody>
+<tr><td>mode</td><td>string (required)</td></tr>
+<tr><td>move_step_angular</td><td>array double (default [0.05, 0.05, 0.17])</td></tr>
+<tr><td>move_step_linear</td><td>array double (default [0.01, 0.01, 0.01])</td></tr>
+<tr><td>step_duration_secs</td><td>double (default 0.1)</td></tr>
+</tbody></table>
+</div>
+<h3 id="joy-joint-teleop-node-config"><a class="header" href="#joy-joint-teleop-node-config">Joy Joint Teleop Node Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Joy Joint Teleop Node Config</th><th></th></tr></thead><tbody>
+<tr><td>joint_step</td><td>double (default 0.02)</td></tr>
+<tr><td>mode</td><td>string (required)</td></tr>
+<tr><td>step_duration_secs</td><td>double (default 0.1)</td></tr>
+</tbody></table>
+</div>
+<h3 id="robot-command-config"><a class="header" href="#robot-command-config">Robot Command Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Robot Command Config</th><th></th></tr></thead><tbody>
+<tr><td>file_path</td><td>string (required)</td></tr>
+<tr><td>name</td><td>string (required)</td></tr>
+</tbody></table>
+</div>
+<h4 id="example-9"><a class="header" href="#example-9">Example</a></h4>
+<pre><code class="language-toml">[[control_nodes_config.command_configs]]
+name = "audio bar"
+file_path = "sample_audio_command.txt"
+
+[[control_nodes_config.command_configs]]
+name = "ros speak"
+file_path = "sample_speak_command.txt"
+</code></pre>
+<pre><code class="language-txt">openrr_apps_robot_command speak foo bar
+</code></pre>
+<pre><code class="language-txt">openrr_apps_robot_command speak espeak "This is topic message"
+</code></pre>
+<pre><code class="language-bash">PrintSpeaker: command audio sine
+PrintSpeaker: command ros speak
+</code></pre>
+<h2 id="gamepad"><a class="header" href="#gamepad"><code>gamepad</code></a></h2>
+<p>string or BuiltinGamepad ("gilrs" or "keyboard"). Default is "gilrs".</p>
+<h2 id="gil_gamepad_config"><a class="header" href="#gil_gamepad_config"><code>gil_gamepad_config</code></a></h2>
+<h3 id="gil-gamepad-config"><a class="header" href="#gil-gamepad-config">Gil Gamepad Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Gil Gamepad Config</th><th></th></tr></thead><tbody>
+<tr><td>device_id</td><td>uint (default 0)</td></tr>
+<tr><td>map</td><td><a href="reference/apps-config/teleop.html#map">Map</a></td></tr>
+</tbody></table>
+</div>
+<h3 id="map"><a class="header" href="#map">Map</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Map</th><th></th></tr></thead><tbody>
+<tr><td>axis_map</td><td>array <a href="reference/apps-config/teleop.html#comparison-table-between-gilrsaxis-and-axis">GilrsAxis Axis</a></td></tr>
+<tr><td>axis_value_map</td><td>array Axis double</td></tr>
+<tr><td>button_map</td><td>array <a href="reference/apps-config/teleop.html#comparison-table-between-gilrsbutton-and-button">GilrsButton Button</a></td></tr>
+</tbody></table>
+</div>
+<p><code>Gilrs</code>との比較表はこのようになります。使用するJoystickにより異なりますので参考までに。特別にこのボタンやスティックを割り当てたいという場合はteleop_configのファイルに例に習って対応付けることでキーを変更できます。</p>
+<p>ボタンやスティックのレイアウトは<a href="https://docs.rs/gilrs/latest/gilrs/#controller-layout">gilrs layout</a>に従っています。</p>
+<h3 id="comparison-table-between-gilrsaxis-and-axis"><a class="header" href="#comparison-table-between-gilrsaxis-and-axis">Comparison table between <code>GilrsAxis</code> and <code>Axis</code></a></h3>
+<div class="table-wrapper"><table><thead><tr><th>GilrsAxis</th><th>Axis</th><th></th></tr></thead><tbody>
+<tr><td>"LeftStickX"</td><td>"LeftStickX"</td><td>(default)</td></tr>
+<tr><td>"LeftStickY"</td><td>"LeftStickY"</td><td>(default)</td></tr>
+<tr><td>"LeftZ"</td><td>"LeftTrigger"</td><td></td></tr>
+<tr><td>"RightStickX"</td><td>"RightStickX"</td><td>(default)</td></tr>
+<tr><td>"RightStickY"</td><td>"RightStickY"</td><td>(default)</td></tr>
+<tr><td>"RightZ"</td><td>"RightTrigger"</td><td></td></tr>
+<tr><td>"DPadX"</td><td>"DPadX"</td><td>(default)</td></tr>
+<tr><td>"DPadY"</td><td>"DPadY"</td><td>(default)</td></tr>
+<tr><td>"Unknown"</td><td>"Unknown"</td><td></td></tr>
+</tbody></table>
+</div>
+<h3 id="comparison-table-between-gilrsbutton-and-button"><a class="header" href="#comparison-table-between-gilrsbutton-and-button">Comparison table between <code>GilrsButton</code> and <code>Button</code></a></h3>
+<div class="table-wrapper"><table><thead><tr><th>GilrsButton</th><th>Button</th><th></th></tr></thead><tbody>
+<tr><td>"South"</td><td>"South"</td><td>(default)</td></tr>
+<tr><td>"East"</td><td>"East"</td><td>(default)</td></tr>
+<tr><td>"North"</td><td>"North"</td><td>(default)</td></tr>
+<tr><td>"West"</td><td>"West"</td><td>(default)</td></tr>
+<tr><td>"C"</td><td></td><td></td></tr>
+<tr><td>"Z"</td><td></td><td></td></tr>
+<tr><td>"LeftTrigger"</td><td>"LeftTrigger"</td><td>(default)</td></tr>
+<tr><td>"LeftTrigger2"</td><td>"LeftTrigger2"</td><td>(default)</td></tr>
+<tr><td>"RightTrigger"</td><td>"RightTrigger"</td><td>(default)</td></tr>
+<tr><td>"RightTrigger2"</td><td>"RightTrigger2"</td><td>(default)</td></tr>
+<tr><td>"Select"</td><td>"Select"</td><td>(default)</td></tr>
+<tr><td>"Start"</td><td>"Start"</td><td>(default)</td></tr>
+<tr><td>"Mode"</td><td>"Mode"</td><td>(default)</td></tr>
+<tr><td>"LeftThumb"</td><td>"LeftThumb"</td><td>(default)</td></tr>
+<tr><td>"RightThumb"</td><td>"RightThumb"</td><td>(default)</td></tr>
+<tr><td>"DPadUp"</td><td>"DPadUp"</td><td>(default)</td></tr>
+<tr><td>"DPadDown"</td><td>"DPadDown"</td><td>(default)</td></tr>
+<tr><td>"DPadLeft"</td><td>"DPadLeft"</td><td>(default)</td></tr>
+<tr><td>"DPadRight"</td><td>"DPadRight"</td><td>(default)</td></tr>
+<tr><td>"Unknown"</td><td>"Unknown"</td><td></td></tr>
+</tbody></table>
+</div>
+<h3 id="example-10"><a class="header" href="#example-10">Example</a></h3>
+<pre><code class="language-toml">[gil_gamepad_config.map]
+axis_map = [
+    # GilrsAxis      Axis (user axis)
+    ['LeftStickX',  'LeftStickX'   ],
+    ['LeftStickY',  'LeftStickY'   ],
+    ['LeftZ',       'LeftTrigger'  ],
+    ['RightStickX', 'RightStickX'  ],
+    ['RightStickY', 'RightStickY'  ],
+    ['RightZ',      'RightTrigger' ],
+    ['DPadX',       'DPadX'        ],
+    ['DPadY',       'DPadY'        ],
+]
+axis_value_map = [
+    # Axis (user axis)  value
+    ['LeftStickX',      -1.0 ],
+    ['RightStickX',     -1.0 ],
+    ['LeftStickY',      -1.0 ],
+    ['RightStickY',     -1.0 ],
+]
+button_map = [
+    # GilrsButton     Button(user button)
+    ['East',          'South'         ],
+    ['C',             'East'          ],
+    ['North',         'North'         ],
+    ['South',         'West'          ],
+    ['West',          'LeftTrigger'   ],
+    ['LeftTrigger',   'LeftTrigger2'  ],
+    ['Z',             'RightTrigger'  ],
+    ['RightTrigger',  'RightTrigger2' ],
+    ['LeftTrigger2',  'Select'        ],
+    ['RightTrigger2', 'Start'         ],
+    ['Mode',          'Mode'          ],
+    ['Select',        'LeftThumb'     ],
+    ['Start',         'RightThumb'    ],
+    ['DPadUp',        'DPadUp'        ],
+    ['DPadDown',      'DPadDown'      ],
+    ['DPadLeft',      'DPadLeft'      ],
+    ['DPadRight',     'DPadRight'     ],
+]
+</code></pre>
+<h2 id="initial_mode"><a class="header" href="#initial_mode"><code>initial_mode</code></a></h2>
+<p><code>initial_mode</code> では初期のモードを指定できます。</p>
+<h3 id="example-11"><a class="header" href="#example-11">Example</a></h3>
+<pre><code class="language-bash">initial_mode = "base"
+</code></pre>
+<h2 id="plugins-1"><a class="header" href="#plugins-1"><code>plugins</code></a></h2>
+<h3 id="teleop-plugin-config"><a class="header" href="#teleop-plugin-config">Teleop Plugin Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Teleop Plugin Config</th><th></th><th>Description</th></tr></thead><tbody>
+<tr><td>args</td><td>string</td><td>Arguments passed when creating this instance.</td></tr>
+<tr><td>args_from_path</td><td>string</td><td>Pass the contents of the specified file as an argument.</td></tr>
+<tr><td>path</td><td>string (required)</td><td>Path to the plugin. If no extension is specified, the default extension for <code>cdylib</code> on the current OS will be selected. (linux: <code>.so</code>, macos: <code>.dylib</code>, windows: <code>.dll</code>)</td></tr>
+</tbody></table>
+</div>
+<h2 id="robot_config_path"><a class="header" href="#robot_config_path"><code>robot_config_path</code></a></h2>
+<p><code>robot_config_path</code> では、configファイルへの相対パスを指定します。</p>
+<h3 id="example-12"><a class="header" href="#example-12">Example</a></h3>
+<pre><code class="language-bash">robot_config_path = "sample_robot_client_config_for_urdf_viz.toml"
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="environmental-variables"><a class="header" href="#environmental-variables">Environmental Variables</a></h1>
+<p>環境変数を<code>export OPENRR_APPS_ROBOT_CONFIG_PATH=some_path_to_config.toml</code>と設定すると、<code>--config-path</code>の後のファイルの
+パスの指定をスキップすることができます。明示的に<code>--config-path</code>を指定すれば環境変数は無視されます。</p>
+<h2 id="openrr_apps_robot_command-1"><a class="header" href="#openrr_apps_robot_command-1"><code>openrr_apps_robot_command</code></a></h2>
+<ul>
+<li>Run sample commands with env var</li>
+</ul>
+<pre><code class="language-bash">export OPENRR_APPS_ROBOT_CONFIG_PATH=$(pwd)/openrr-apps/config/sample_robot_client_config_for_urdf_viz.toml
+
+openrr_apps_robot_command load_commands ./openrr-apps/command/sample_cmd_urdf_viz.txt
+</code></pre>
+<h2 id="openrr_apps_joint_position_sender-2"><a class="header" href="#openrr_apps_joint_position_sender-2"><code>openrr_apps_joint_position_sender</code></a></h2>
+<ul>
+<li>Run for sample urdf with env var</li>
+</ul>
+<pre><code class="language-bash">export OPENRR_APPS_ROBOT_CONFIG_PATH=$(pwd)/openrr-apps/config/sample_robot_client_config_for_urdf_viz.toml
+
+openrr_apps_joint_position_sender
+</code></pre>
+<h2 id="note-3"><a class="header" href="#note-3">Note</a></h2>
+<p>他の設定にしたい場合に<code>OPENRR_APPS_ROBOT_CONFIG_PATH</code>を設定し直すことを忘れないでください。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="overwrite-configuration-at-startup"><a class="header" href="#overwrite-configuration-at-startup">Overwrite configuration at startup</a></h1>
+<p><code>--config</code>のオプションを追加することで、起動時にconfigファイルの上書きをすることができます。</p>
+<p>例えば、以下のようにしてurdfへのパスを更新します。</p>
+<pre><code class="language-bash">openrr_apps_robot_command \
+  --config-path ./openrr-apps/config/sample_robot_client_config_for_urdf_viz.toml \
+  --config 'openrr_clients_config.urdf_path="path/to/urdf"' \
+  load_commands ./openrr-apps/command/sample_cmd_urdf_viz.txt
+</code></pre>
+<p><code>openrr_apps_robot_teleop</code>では2つのオプションがあります。<code>--robot-config</code>では、client config fileを上書きします。<code>--teleop-config</code>ではteleop configを上書きします。</p>
+<p>例として、<code>openrr_apps_robot_teleop</code>を<code>arci-gamepad-keyboard</code>を追加して実行します。</p>
+<pre><code class="language-bash">openrr_apps_robot_teleop \
+  --config-path ./openrr-apps/config/sample_teleop_config_urdf_viz.toml \
+  --teleop-config 'gamepad="Keyboard"'
+</code></pre>
+<p><code>joint_position_limiter</code>を無効にしてみます。</p>
+<pre><code class="language-bash">openrr_apps_robot_teleop \
+  --config-path ./openrr-apps/config/sample_teleop_config_urdf_viz.toml \
+  --robot-config 'urdf_viz_clients_configs[0].wrap_with_joint_position_limiter=false'
+</code></pre>
+<p>複数の設定を上書きしたい場合は、以下のようにセミコロンか改行によって分離する必要があります。</p>
+<pre><code class="language-bash"># semicolon-separated
+openrr_apps_robot_teleop \
+  --config-path ./openrr-apps/config/sample_teleop_config_urdf_viz.toml \
+  --robot-config 'urdf_viz_clients_configs[0].wrap_with_joint_position_limiter=false;openrr_clients_config.urdf_path="path/to/urdf"'
+# newline-separated
+{
+  echo 'urdf_viz_clients_configs[0].wrap_with_joint_position_limiter=false'
+  echo 'openrr_clients_config.urdf_path="path/to/urdf"'
+} &gt; overwrite.txt
+openrr_apps_robot_teleop \
+  --config-path ./openrr-apps/config/sample_teleop_config_urdf_viz.toml \
+  --robot-config "$(cat ./overwrite.txt)"
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="develop-openrr"><a class="header" href="#develop-openrr">Develop OpenRR</a></h1>
+<ol>
+<li><a href="develop/developer.html">For Developer</a></li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="for-developer"><a class="header" href="#for-developer">For Developer</a></h1>
+<p><strong>coming soon...</strong></p>
+<ul>
+<li>OpenRRを用いたアプリケーションをどのように開発するか。</li>
+<li>マイコンや他ソフトウェアとのインターフェースをどのように実装するか。</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="troubleshooting"><a class="header" href="#troubleshooting">Troubleshooting</a></h1>
+<p>基本的にはエラーログなどに従ってほしいですが、よくある例を以下にあげておきます。</p>
+<h2 id="featuring-ros2"><a class="header" href="#featuring-ros2">Featuring ROS2</a></h2>
+<pre><code class="language-bash">cargo build --release --features ros2
+cargo install --path ./openrr-apps
+</code></pre>
+<p>ROS2featureしてビルドしたか確認してみてください。</p>
+<h2 id="gui-troubleshooting"><a class="header" href="#gui-troubleshooting">GUI Troubleshooting</a></h2>
+<p>GUIまわりの場合は、GitHub上の<a href="https://github.com/openrr/openrr/tree/main/openrr-gui#troubleshooting">README</a>を参考にしてください。</p>
+<h2 id="それでもだめな場合"><a class="header" href="#それでもだめな場合">それでもだめな場合</a></h2>
+<p>もしかするとOpenRRのバグかもしれないので、GitHubにあるリポジトリの<a href="https://github.com/openrr/openrr/issues">Issues</a>にその問題を投稿してくださると助かります。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>

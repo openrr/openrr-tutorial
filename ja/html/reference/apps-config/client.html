@@ -1,0 +1,580 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Client config - OpenRR Book</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Tutorial and reference for OpenRR">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">OpenRR Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/openrr/openrr-tutorial/tree/main/docs/ja" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/openrr/openrr-tutorial/tree/main/docs/ja/src/reference/apps-config/client.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="client-config"><a class="header" href="#client-config">Client config</a></h1>
+<h2 id="configを書く"><a class="header" href="#configを書く">configを書く</a></h2>
+<p>configを自分で書くことで、サンプルにないロボットや独自に作成したロボットがOpenRRで動くようになります。configには以下の要素を書くことができます。</p>
+<p>また、VSCodeを使用している方は<a href="https://github.com/openrr/openrr/tree/main/openrr-apps#schemas-for-config-files">こちら</a>から拡張機能の<code>EvenBetterTOML</code>を導入することを推奨します。</p>
+<h2 id="default-config"><a class="header" href="#default-config">Default config</a></h2>
+<p>デフォルトは以下のようになっています。読み込んだconfigに応じて設定が追加または上書きされます。</p>
+<pre><code class="language-bash">openrr_apps_robot_command --show-default-config
+</code></pre>
+<pre><code class="language-toml">[speak_configs]
+
+[openrr_clients_config]
+self_collision_check_pairs = []
+
+[openrr_clients_config.ik_solvers_configs]
+
+[plugins]
+</code></pre>
+<h2 id="robot_config"><a class="header" href="#robot_config">robot_config</a></h2>
+<p>Client configに書く項目の一覧になります。リポジトリにあるサンプルもぜひご参考に。サンプルは<a href="https://github.com/openrr/openrr/tree/main/openrr-apps/config">こちら</a>から。</p>
+<div class="table-wrapper"><table><thead><tr><th>Properties</th><th>Description</th><th>Type</th></tr></thead><tbody>
+<tr><td>joint_trajectory_clients</td><td>使用するJoint trajectory clients</td><td>array string</td></tr>
+<tr><td>localization</td><td>使用するLocalizationの指定。 <code>ros</code>、<code>urdf-viz</code>、<code>false</code>、もしくはプラグインの名前。</td><td>string or boolean</td></tr>
+<tr><td>move_base</td><td>使用するMoveBaseの指定。 <code>ros</code>、<code>urdf-viz</code>、<code>false</code>、もしくはプラグインの名前。</td><td>string or boolean</td></tr>
+<tr><td>navigation</td><td>使用するNavigationの指定。 <code>ros</code>、<code>urdf-viz</code>、<code>false</code>、もしくはプラグインの名前。</td><td>string or boolean</td></tr>
+<tr><td><a href="#openrr-clients-config">openrr_clients_config</a></td><td>OpenRR clientの設定。</td><td></td></tr>
+<tr><td><a href="#ros-control-action-client-config">ros_action_clients_configs</a></td><td>ROS Action Clientの設定。</td><td>array <a href="#ros-control-action-client-config">RosControlActionClientConfig</a></td></tr>
+<tr><td>plugins</td><td>プラグインの設定。</td><td></td></tr>
+<tr><td><a href="#ros-control-client-config">ros_clients_configs</a></td><td>ros_clients_configs</td><td></td></tr>
+<tr><td><a href="#ros-cmdvel-movebase-client-config">ros_cmd_vel_move_base_client_config</a></td><td><code>ROS MoveBase</code>の設定。<code>.topic</code>を付加して送りたいトピックを指定。</td><td></td></tr>
+<tr><td><a href="#ros-localization-client-config">ros_localization_client_config</a></td><td><code>ROS Localization</code>の設定。要素の有効無効の指定。</td><td></td></tr>
+<tr><td><a href="#ros-navigation-client-config">ros_navigation_client_config</a></td><td><code>ROS Navigation</code>の設定。要素の有効無効の指定。</td><td></td></tr>
+<tr><td>speak_configs</td><td>speakの設定。</td><td><a href="#speak-config">SpeakConfig</a></td></tr>
+<tr><td>speakers</td><td>使用するSpeakersの指定。</td><td>string</td></tr>
+<tr><td>urdf_viz_clients_configs</td><td>urdf_vizの設定。</td><td></td></tr>
+</tbody></table>
+</div>
+<h2 id="joint_trajectory_clients"><a class="header" href="#joint_trajectory_clients"><code>joint_trajectory_clients</code></a></h2>
+<p>Type: array string</p>
+<h2 id="localization-move_base-navigation"><a class="header" href="#localization-move_base-navigation"><code>localization</code>, <code>move_base</code>, <code>navigation</code></a></h2>
+<p>Type: string or boolean</p>
+<h3 id="example"><a class="header" href="#example">Example</a></h3>
+<pre><code class="language-toml">move_base = false
+</code></pre>
+<pre><code class="language-toml">navigation = "arci_ros2"
+</code></pre>
+<h2 id="openrr_clients_config"><a class="header" href="#openrr_clients_config"><code>openrr_clients_config</code></a></h2>
+<h3 id="openrr-clients-config"><a class="header" href="#openrr-clients-config">OpenRR Clients Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>OpenRR Clients Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>collision_check_clients_configs</td><td><a href="#collision-check-client-config">CollisionCheckClientConfig</a></td></tr>
+<tr><td>ik_clients_configs</td><td><a href="#ik-client-config">IkClientConfig</a></td></tr>
+<tr><td>ik_solvers_configs</td><td><a href="#ik-solver-config">IkSolverConfig</a></td></tr>
+<tr><td>joint_trajectory_clients_container_configs</td><td><a href="#joint-trajectory-client-container-config">JointTrajectoryClientsContainerConfig</a></td></tr>
+<tr><td>joint_poses</td><td><a href="#joints-pose">JointsPose</a></td></tr>
+<tr><td>self_collision_check_pairs</td><td>array string</td></tr>
+<tr><td>urdf_full_path</td><td>string</td></tr>
+<tr><td>urdf_path</td><td>string</td></tr>
+</tbody></table>
+</div>
+<h4 id="example-1"><a class="header" href="#example-1">Example</a></h4>
+<pre><code class="language-toml">[openrr_clients_config]
+urdf_path = "./twin_arms_robot.urdf"
+self_collision_check_pairs = [
+    "left_shoulder:left_gripper",
+    "right_shoulder:right_gripper"
+]
+</code></pre>
+<h3 id="collision-check-client-config"><a class="header" href="#collision-check-client-config">Collision Check Client Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Collision Check Client Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>client_name</td><td>string (required)</td></tr>
+<tr><td>name</td><td>string (required)</td></tr>
+<tr><td>self_collision_checker_config</td><td><a href="#self-collision-checker-config">SelfCollisionCheckerConfig</a></td></tr>
+</tbody></table>
+</div>
+<h4 id="example-2"><a class="header" href="#example-2">Example</a></h4>
+<pre><code class="language-toml">[[openrr_clients_config.collision_check_clients_configs]]
+client_name = "arm_with_torso"
+name = "arm_with_torso_collision_checked"
+</code></pre>
+<h3 id="self-collision-checker-config"><a class="header" href="#self-collision-checker-config">Self Collision Checker Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Self Collision Checker Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>prediction</td><td>double (default 0.001)</td></tr>
+<tr><td>time_interpolate_rate</td><td>double (default 0.5)</td></tr>
+</tbody></table>
+</div>
+<h3 id="ik-client-config"><a class="header" href="#ik-client-config">IK Client Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>IK Client Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>client_name</td><td>string (required)</td></tr>
+<tr><td>name</td><td>string (required)</td></tr>
+<tr><td>solver_name</td><td>string (required)</td></tr>
+</tbody></table>
+</div>
+<h4 id="example-3"><a class="header" href="#example-3">Example</a></h4>
+<pre><code class="language-toml">[[openrr_clients_config.ik_clients_configs]]
+name = "arm_with_torso_ik"
+client_name = "arm_with_torso_collision_checked"
+solver_name = "arm_with_torso_ik_solver"
+</code></pre>
+<h3 id="ik-solver-config"><a class="header" href="#ik-solver-config">IK Solver Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>IK Solver Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>allowable_angle_error_rad</td><td>double (default 0.005)</td></tr>
+<tr><td>allowable_position_error_m</td><td>double (default 0.005)</td></tr>
+<tr><td>constraints</td><td><a href="#constraints">Constraints</a></td></tr>
+<tr><td>ik_target</td><td>string (required)</td></tr>
+<tr><td>jacobian_multiplier</td><td>double (default 0.1)</td></tr>
+<tr><td>num_max_try</td><td>uint (default 300)</td></tr>
+<tr><td>root_node_name</td><td>string</td></tr>
+<tr><td>use_random_ik</td><td>boolean (default false)</td></tr>
+</tbody></table>
+</div>
+<h4 id="example-4"><a class="header" href="#example-4">Example</a></h4>
+<pre><code class="language-toml">[openrr_clients_config.ik_solvers_configs.arm_with_torso_ik_solver]
+ik_target = "gripper_palm_joint"
+allowable_position_error_m = 0.01
+</code></pre>
+<h3 id="constraints"><a class="header" href="#constraints">Constraints</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Constraints</th><th>Type</th></tr></thead><tbody>
+<tr><td>ignored_joint_names</td><td>array string (default [])</td></tr>
+<tr><td>position_x</td><td>boolean (default true)</td></tr>
+<tr><td>position_y</td><td>boolean (default true)</td></tr>
+<tr><td>position_z</td><td>boolean (default true)</td></tr>
+<tr><td>rotation_x</td><td>boolean (default true)</td></tr>
+<tr><td>rotation_y</td><td>boolean (default true)</td></tr>
+<tr><td>rotation_z</td><td>boolean (default true)</td></tr>
+</tbody></table>
+</div>
+<h3 id="joint-trajectory-client-container-config"><a class="header" href="#joint-trajectory-client-container-config">Joint Trajectory Client Container Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Joint Trajectory Client Container Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>clients_name</td><td>array string (required)</td></tr>
+<tr><td>name</td><td>string</td></tr>
+</tbody></table>
+</div>
+<h3 id="joints-pose"><a class="header" href="#joints-pose">Joints Pose</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Joints Pose</th><th>Type</th></tr></thead><tbody>
+<tr><td>client_name</td><td>string (required)</td></tr>
+<tr><td>pose_name</td><td>string (required)</td></tr>
+<tr><td>positions</td><td>array double (required)</td></tr>
+</tbody></table>
+</div>
+<h4 id="example-5"><a class="header" href="#example-5">Example</a></h4>
+<pre><code class="language-toml">[[openrr_clients_config.joints_poses]]
+pose_name = "stand by"
+client_name = "arm"
+positions = [0.0, 1.2, 0.0, -0.7, 0.0, -0.2, 0.0]
+</code></pre>
+<h2 id="ros_action_clients_configs"><a class="header" href="#ros_action_clients_configs"><code>ros_action_clients_configs</code></a></h2>
+<h3 id="ros-control-action-client-config"><a class="header" href="#ros-control-action-client-config">ROS Control Action Client Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>ROS Control Action Client Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>complete_allowable_errors</td><td>array double (required)</td></tr>
+<tr><td>complete_timeout_sec</td><td>double (default 10.0)</td></tr>
+<tr><td>controller_name</td><td>string (required)</td></tr>
+<tr><td>joint_names</td><td>array string (required)</td></tr>
+<tr><td>joint_position_difference_limits</td><td>array double</td></tr>
+<tr><td>joint_position_limiter_strategy</td><td><a href="#joint-position-limiter-strategy">JointPositionLimiterStrategy</a></td></tr>
+<tr><td>joint_position_limits</td><td><a href="#joint-position-limit">JointPositionLimit</a></td></tr>
+<tr><td>joint_velocity_limits</td><td>array double</td></tr>
+<tr><td>name</td><td>string (required)</td></tr>
+<tr><td>send_partial_joints_goal</td><td>boolean (default false)</td></tr>
+<tr><td>state_topic_name</td><td>string (required)</td></tr>
+<tr><td>wrap_with_joint_position_difference_limiter</td><td>boolean (default false)</td></tr>
+<tr><td>wrap_with_joint_position_limiter</td><td>boolean (default false)</td></tr>
+<tr><td>wrap_with_joint_velocity_limiter</td><td>boolean (default false)</td></tr>
+</tbody></table>
+</div>
+<h3 id="joint-position-limiter-strategy"><a class="header" href="#joint-position-limiter-strategy">Joint Position Limiter Strategy</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Joint Position Limiter Strategy</th><th>Element</th></tr></thead><tbody>
+<tr><td>string (enum)</td><td>"Clamp", "ClampWithWarn", "Error"</td></tr>
+</tbody></table>
+</div>
+<h3 id="joint-position-limit"><a class="header" href="#joint-position-limit">Joint Position Limit</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Joint Position Limit</th><th>Type</th></tr></thead><tbody>
+<tr><td>lower</td><td>double</td></tr>
+<tr><td>upper</td><td>double</td></tr>
+</tbody></table>
+</div>
+<h4 id="example-6"><a class="header" href="#example-6">Example</a></h4>
+<pre><code class="language-toml">[[urdf_viz_clients_configs]]
+name = "foo"
+joint_names = ["bar1", "bar2"]
+joint_position_limits = [
+    { lower = -3.0, upper = 3.0 },
+    { lower = -2.0, upper = 1.5 },
+]
+</code></pre>
+<h2 id="plugins"><a class="header" href="#plugins"><code>plugins</code></a></h2>
+<div class="table-wrapper"><table><thead><tr><th>plugin config</th><th>Type</th></tr></thead><tbody>
+<tr><td>instances</td><td><a href="#plugin-instance">PluginInstance</a></td></tr>
+<tr><td>path</td><td></td></tr>
+</tbody></table>
+</div><div class="table-wrapper"><table><thead><tr><th>Plugin Instance</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td>args</td><td>string</td><td>Arguments passed when creating this instance.</td></tr>
+<tr><td>args_from_path</td><td>string</td><td>Pass the contents of the specified file as an argument.</td></tr>
+<tr><td>path</td><td>string (required)</td><td>Path to the plugin. If no extension is specified, the default extension for <code>cdylib</code> on the current OS will be selected. (linux: <code>.so</code>, macos: <code>.dylib</code>, windows: <code>.dll</code>)</td></tr>
+<tr><td>type</td><td><a href="#plugin-instance-kind">PluginInstanceKind</a></td><td></td></tr>
+</tbody></table>
+</div>
+<h3 id="plugin-instance-kind"><a class="header" href="#plugin-instance-kind">Plugin Instance Kind</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Joint Position Limiter Strategy</th><th>Element</th></tr></thead><tbody>
+<tr><td>string (enum)</td><td>"JointTrajectoryClient", Localization", MoveBase", Navigation", "Speaker"</td></tr>
+</tbody></table>
+</div>
+<h2 id="ros_clients_configs"><a class="header" href="#ros_clients_configs"><code>ros_clients_configs</code></a></h2>
+<h3 id="ros-control-client-config"><a class="header" href="#ros-control-client-config">ROS Control Client Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>ROS Control Client Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>complete_allowable_errors</td><td>array double</td></tr>
+<tr><td>complete_timeout_sec</td><td>double</td></tr>
+<tr><td>controller_name</td><td>string</td></tr>
+<tr><td>joint_names</td><td>array string</td></tr>
+<tr><td>joint_position_limits</td><td>array <a href="#joint-position-limit">JointPositionLimit</a></td></tr>
+<tr><td>joint_velocity_limits</td><td>array double</td></tr>
+<tr><td>name</td><td>string</td></tr>
+<tr><td>send_partial_joints_goal</td><td>boolean</td></tr>
+<tr><td>state_topic_name</td><td>string</td></tr>
+<tr><td>wrap_with_joint_position_limiter</td><td>boolean (false)</td></tr>
+<tr><td>wrap_with_joint_velocity_limiter</td><td>boolean (false)</td></tr>
+</tbody></table>
+</div>
+<h3 id="joint-position-limit-1"><a class="header" href="#joint-position-limit-1">Joint Position Limit</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Joint Position Limit</th><th>Type</th></tr></thead><tbody>
+<tr><td>lower</td><td>double</td></tr>
+<tr><td>upper</td><td>double</td></tr>
+</tbody></table>
+</div>
+<h4 id="example-7"><a class="header" href="#example-7">Example</a></h4>
+<pre><code class="language-toml">[[ros_clients_configs]]
+name = "arm"
+joint_names = [
+    "shoulder_joint",
+    "shoulder_joint",
+    "upper_arm_roll_joint",
+    "elbow_flex_joint",
+    "forearm_roll_joint",
+    "wrist_flex_joint",
+    "wrist_roll_joint",
+]
+complete_allowable_errors = [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01]
+controller_name = "arm_controller"
+state_topic_name = "arm_controller/openrr/state"
+</code></pre>
+<h2 id="ros_cmd_vel_move_base_client_config"><a class="header" href="#ros_cmd_vel_move_base_client_config"><code>ros_cmd_vel_move_base_client_config</code></a></h2>
+<h3 id="ros-cmd_vel-movebase-client-config"><a class="header" href="#ros-cmd_vel-movebase-client-config">ROS cmd_vel MoveBase Client Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>ROS cmd_vel MoveBase Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>topic</td><td>string</td></tr>
+</tbody></table>
+</div>
+<h2 id="ros_localization_client_config"><a class="header" href="#ros_localization_client_config"><code>ros_localization_client_config</code></a></h2>
+<h3 id="ros-localization-client-config"><a class="header" href="#ros-localization-client-config">ROS Localization Client Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>ROS Localization Client Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>request_final_nomotion_update_hack</td><td>boolean</td></tr>
+</tbody></table>
+</div>
+<h2 id="ros_navigation_client_config"><a class="header" href="#ros_navigation_client_config"><code>ros_navigation_client_config</code></a></h2>
+<h3 id="ros-navigation-client-config"><a class="header" href="#ros-navigation-client-config">ROS Navigation Client Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>ROS Navigation Client Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>clear_costmap_before_start</td><td>boolean</td></tr>
+<tr><td>request_final_nomotion_update_hack</td><td>boolean</td></tr>
+</tbody></table>
+</div>
+<h2 id="speak_configs"><a class="header" href="#speak_configs"><code>speak_configs</code></a></h2>
+<h3 id="speak-config"><a class="header" href="#speak-config">Speak Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Speak Config</th><th>Element</th></tr></thead><tbody>
+<tr><td>string(enum)</td><td><code>"Print"</code>, <code>"Audio"</code>, <code>"Command"</code> or <code>"RosEspeak"</code></td></tr>
+</tbody></table>
+</div><div class="table-wrapper"><table><thead><tr><th>"RosEspeak"</th><th>Type</th></tr></thead><tbody>
+<tr><td>config</td><td><a href="#ros-espeak-client-config">RosEspeakClientConfig</a></td></tr>
+</tbody></table>
+</div><div class="table-wrapper"><table><thead><tr><th>"Audio"</th><th>Type</th></tr></thead><tbody>
+<tr><td>args</td><td>map (required)</td></tr>
+</tbody></table>
+</div><div class="table-wrapper"><table><thead><tr><th>map</th><th>Type</th></tr></thead><tbody>
+<tr><td>{name}</td><td>string</td></tr>
+</tbody></table>
+</div>
+<h3 id="ros-espeak-client-config"><a class="header" href="#ros-espeak-client-config">ROS Espeak Client Config</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>ROS Espeak Client Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>topic</td><td>string</td></tr>
+</tbody></table>
+</div>
+<h4 id="example-audio"><a class="header" href="#example-audio">Example (Audio)</a></h4>
+<pre><code class="language-toml">[speak_configs."foo"]
+type = "Audio"
+
+[speak_configs."foo".args.map]
+bar = "./bar.mp3" # Path to audio file
+</code></pre>
+<pre><code class="language-bash">openrr_apps_robot_command --config-path {path to toml} speak foo bar
+</code></pre>
+<h4 id="example-rosespeak"><a class="header" href="#example-rosespeak">Example (ROSEspeak)</a></h4>
+<pre><code class="language-toml">[speak_configs.espeak]
+type = "RosEspeak"
+
+[speak_configs.espeak.args.config]
+topic = "/sample/message"
+</code></pre>
+<pre><code class="language-bash">openrr_apps_robot_command --config-path {path to toml} -i
+&gt;  speak espeak Hello!
+</code></pre>
+<pre><code class="language-bash">data: "Hello!"
+---
+</code></pre>
+<h2 id="speakers"><a class="header" href="#speakers"><code>speakers</code></a></h2>
+<p>Type: string</p>
+<h2 id="urdf_viz_clients_configs"><a class="header" href="#urdf_viz_clients_configs"><code>urdf_viz_clients_configs</code></a></h2>
+<div class="table-wrapper"><table><thead><tr><th>URDF-Viz Web Client Config</th><th>Type</th></tr></thead><tbody>
+<tr><td>joint_names</td><td>array string</td></tr>
+<tr><td>joint_position_limits</td><td>array <a href="#joint-position-limit">JointPositionLimit</a></td></tr>
+<tr><td>joint_velocity_limits</td><td>array double</td></tr>
+<tr><td>name</td><td>string</td></tr>
+<tr><td>wrap_with_joint_position_limiter</td><td>boolean (default false)</td></tr>
+<tr><td>wrap_with_joint_velocity_limiter</td><td>boolean (default false)</td></tr>
+</tbody></table>
+</div>
+<h4 id="example-8"><a class="header" href="#example-8">Example</a></h4>
+<pre><code class="language-toml">[[urdf_viz_clients_configs]]
+# `urdf-viz` client name
+name = "arm"
+# List of joints
+joint_names = [
+    "shoulder_yaw",
+    "shoulder_pitch",
+    "shoulder_roll",
+    "elbow_pitch",
+    "wrist_yaw",
+    "wrist_pitch",
+]
+wrap_with_joint_position_limiter = true
+
+# Range of joints
+joint_position_limits = [
+    { lower = -3.0, upper = 3.0 },
+    { lower = -2.0, upper = 1.5 },
+    { lower = -1.5, upper = 2.0 },
+    { lower = -2.0, upper = 1.5 },
+    { lower = -3.0, upper = 3.0 },
+    { lower = -2.0, upper = 2.0 },
+]
+
+[openrr_clients_config]
+# Path to URDF file
+urdf_path = "./sample.urdf"
+self_collision_check_pairs = [
+    "shoulder_yaw:gripper_linear1",
+]
+
+[[openrr_clients_config.collision_check_clients_configs]]
+# Collision check client name
+name = "arm_collision_checked"
+# `urdf-viz` client name
+client_name = "arm"
+
+[[openrr_clients_config.ik_clients_configs]]
+# IK client name
+name = "arm_ik"
+# Collision check client name
+client_name = "arm_collision_checked"
+# IK solver name
+solver_name = "arm_ik_solver"
+
+[[openrr_clients_config.joints_poses]]
+# Position name
+pose_name = "zero"
+# Collision check client name
+client_name = "arm_collision_checked"
+# Position that you want to set
+positions = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+[openrr_clients_config.ik_solvers_configs.arm_ik_solver] # IK solver name (arm_ik_solver)
+ik_target = "tool_fixed"
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../reference/apps-config/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../reference/apps-config/teleop.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../reference/apps-config/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../reference/apps-config/teleop.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
